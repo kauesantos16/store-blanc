@@ -1,3 +1,343 @@
-.blanc {
-  padding: 120px;
-}
+/* Preview */
+
+    body {
+    font-family: 'Raleway', sans-serif;
+    }
+
+    .blanc-font-great {
+        font-family: 'Great Vibes', cursive;
+        font-size: 48px;
+        font-weight: 400;
+    }
+
+    .blanc-container {
+        width: 100%;
+        max-width: 1280px;
+        padding-left: 24px;
+        padding-right: 24px;
+        padding-top: 120px;
+        padding-bottom: 120px;
+        margin: auto;
+    }
+
+    .blanc-img-quadrada {
+        width: 100%;
+        aspect-ratio: 1/1;
+    }
+
+    /* Global */
+
+    .blanc-grid-two {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding-bottom: 120px;
+    }
+
+    .blanc-item-block1 h2 {
+        font-size: 24px;
+    }
+
+    .blanc-item-block2 h2 {
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 1px;
+    }
+
+    .blanc-item-block2 {
+        display: flex;
+        gap: 16px;
+        flex-direction: column;
+    }
+
+    .marquee-content {
+    display: flex;
+    align-items: center;
+    gap: 40px; /* Espaçamento entre os itens */
+    animation: scroll 20s linear infinite;
+    }
+
+    .marquee-content span {
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 1px;
+    }
+
+    /* O Ícone SVG */
+    .icon {
+    width: 20px;
+    height: 20px;
+    }
+
+    /* A Mágica do Loop */
+    @keyframes scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+    }
+
+    /* Pausar ao passar o mouse (opcional) */
+    .marquee:hover .marquee-content {
+    animation-play-state: paused;
+    }
+
+    .blanc-text {
+        font-size: 14px;
+        max-width: 420px;
+        text-align: left;
+        line-height: 150%;
+        letter-spacing: 1px;
+        color: #7B7B7B;
+    }
+
+    .blanc-text2 {
+        font-size: 14px;
+        max-width: 80%;
+        text-align: left;
+        line-height: 150%;
+        letter-spacing: 1px;
+        color: #7B7B7B;
+    }
+
+    .blanc-text-slide {
+        font-size: 16px;
+        letter-spacing: 1px;
+        color: #000000;
+    }
+
+    .blanc-gift-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 80px;
+    }
+
+    .blanc-item-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .blanc-list-ul li {
+        color: #7B7B7B;
+        line-height: 150%;
+    }
+
+    .blanc-text-black {
+        color: #000000;
+        line-height: 150%;
+    }
+
+    .blanc-list-details {
+        padding-left: 48px;
+        padding-right: 48px;
+    }
+
+    .blanc-div-link {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #A3A3A3;
+    }
+
+    .blanc-link {
+        text-decoration: none;
+        font-size: 12px;
+        color: #000;
+    }
+
+    .blanc-item-gift {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* Primeiro Bloco */
+
+    .blanc-section-description {
+        padding-bottom: 100px;
+    }
+
+    .blanc-text-description {
+        max-width: 760px;
+        font-size: 24px;
+        font-weight: 300;
+        line-height: 150%;
+        letter-spacing: 1px;
+    }
+
+    /* Segundo Bloco */
+
+    .blanc-section-slide {
+        width: 100%;
+        overflow: hidden; /* Esconde o que sai da tela */
+        white-space: nowrap;
+        display: flex;
+        position: relative;
+    }
+
+    .blanc-marquee-gradient {
+        width: 48px;
+        height: 48px;
+        position: absolute;
+        z-index: 1;
+    }
+
+    .blanc-marquee-gradient.left {
+        background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+        left: 0;
+    }
+
+    .blanc-marquee-gradient.right {
+        background: linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+        right: 0;
+    }
+
+    /* Terceiro Bloco */
+    .blanc-section-details {
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
+
+    .blanc-list-ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .blanc-list-ul li .black {
+        color: #000;
+    }
+
+    /* Quarto Bloco */
+    .blanc-section-guarantee {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        padding-bottom: 100px;
+    }
+
+    .blanc-guarantee-block-left {
+        border: solid 1px #000;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        padding-left: 24px;
+        padding-right: 24px;
+        display: flex;
+        width: fit-content;
+    }
+
+    .blanc-guarantee-block-left p {
+        width: fit-content;
+        font-size: 14px
+    }
+
+    .blanc-guarantee-block-right {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background-color: #F4F4F4;
+        padding-left: 24px;
+        padding-right: 24px;
+        gap: 24px;
+        justify-content: space-between;
+    }
+
+     /* Quinto Bloco */
+    .blanc-highlight-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .blanc-highlight-item h2 {
+        line-height: 100%;
+        letter-spacing: 1px;
+        font-weight: 500;
+        font-size: 16px;
+    }
+
+    .blanc-item-sticky {
+        padding-left: 80px;
+        padding-right: 80px;
+        position: sticky;
+        top: 16px
+    }
+
+    /* Sexto Bloco */
+
+    .blanc-div-gift-text {
+        display: flex;
+        align-items: center;
+        padding: 80px;
+    }
+
+    .blanc-wrapper-gift-text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .blanc-wrapper-gift-text p {
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 1px;
+        line-height: 150%;
+        color: #7B7B7B;
+    }
+
+    .blanc-wrapper-gift-text h3 {
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 1px;
+        line-height: 100%;
+        color: #7B7B7B;
+    }
+
+    /* Setimo Bloco */
+
+    .blanc-grid-three {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 56px;
+        row-gap: 56px;
+    }
+
+    .blanc-section-faq {
+        padding-bottom: 100px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .blanc-section-faq h2 {
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .blanc-faq-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .blanc-faq-item h3 {
+        font-size: 14px;
+        letter-spacing: 1px;
+        line-height: 150%;
+        font-weight: 600;
+        color: #7B7B7B;
+        margin: 0;
+    }
+
+    .blanc-faq-item p {
+        font-size: 14px;
+        line-height: 150%;
+        letter-spacing: 1px;
+        color: #7B7B7B;
+        margin: 0;
+    }
