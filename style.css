@@ -205,7 +205,7 @@
     }
 
     /* Pausar ao passar o mouse (opcional) */
-    .marquee:hover .marquee-content {
+    .blanc-section-slide:hover .marquee-content {
     animation-play-state: paused;
     }
 
