@@ -29,6 +29,12 @@
 
     /* Global */
 
+    .blanc-description-reset div {
+	display: initial !important; 
+    min-height: 0 !important;
+    margin: 0 !important;
+    }
+
     .blanc-grid-two {
         display: grid;
         grid-template-columns: 1fr 1fr;
