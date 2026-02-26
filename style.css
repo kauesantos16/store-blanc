@@ -367,6 +367,12 @@
         color: #7B7B7B;
     }
 
+    .blanc-div-gift-subtext {
+        display: flex !important;
+        flex-direction: column;
+        gap: 8px;
+    }
+
     /* Setimo Bloco */
 
     .blanc-grid-three {
