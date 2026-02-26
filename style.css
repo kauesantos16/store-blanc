@@ -222,11 +222,6 @@
     }
     }
 
-    /* Pausar ao passar o mouse (opcional) */
-    .blanc-section-slide:hover .marquee-content {
-    animation-play-state: paused;
-    }
-
     /* Terceiro Bloco */
     .blanc-section-details {
         padding-top: 100px;
