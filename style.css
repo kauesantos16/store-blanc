@@ -335,6 +335,7 @@
         display: flex !important;
         align-items: center;
         padding: 80px;
+        gap: 32px;
     }
 
     @media (max-width: 767px) {
