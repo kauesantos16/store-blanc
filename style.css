@@ -225,7 +225,7 @@
     /* Terceiro Bloco */
     .blanc-section-details {
         padding-top: 100px;
-        padding-bottom: 100px;
+        padding-bottom: 60px;
     }
 
     .blanc-list-ul {
@@ -293,10 +293,17 @@
         flex-direction: column;
         align-items: flex-start;
         padding-bottom: 24px;
+        padding-top: 24px;
     }
     }
 
      /* Quinto Bloco */
+    @media (max-width: 767px) {
+    .blanc-section-highlights {
+        gap: 56px;
+    }
+    }
+
     .blanc-highlight-item {
         display: flex !important;
         flex-direction: column;
