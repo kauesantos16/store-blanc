@@ -76,7 +76,7 @@
     .blanc-text-slide {
         font-size: 16px;
         letter-spacing: 1px;
-        color: #000000;
+        color: #111111;
     }
 
     .blanc-gift-right {
@@ -98,7 +98,7 @@
     }
 
     .blanc-text-black {
-        color: #000000;
+        color: #111111;
         line-height: 150%;
     }
 
@@ -117,7 +117,7 @@
     .blanc-link {
         text-decoration: none;
         font-size: 12px;
-        color: #000;
+        color: #111111;
     }
 
     .blanc-item-gift {
