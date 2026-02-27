@@ -61,7 +61,7 @@
         text-align: left;
         line-height: 150%;
         letter-spacing: 1px;
-        color: #7B7B7B;
+        color: #595959;
     }
 
     .blanc-text2 {
@@ -70,7 +70,7 @@
         text-align: left;
         line-height: 150%;
         letter-spacing: 1px;
-        color: #7B7B7B;
+        color: #595959;
     }
 
     .blanc-text-slide {
@@ -93,7 +93,7 @@
     }
 
     .blanc-list-ul li {
-        color: #7B7B7B;
+        color: #595959;
         line-height: 150%;
     }
 
@@ -238,7 +238,7 @@
     }
 
     .blanc-list-ul li .black {
-        color: #000;
+        color: #11111;
     }
 
     /* Quarto Bloco */
@@ -351,7 +351,7 @@
         font-weight: 400;
         letter-spacing: 1px;
         line-height: 150%;
-        color: #7B7B7B;
+        color: #595959;
     }
 
     .blanc-wrapper-gift-text h3 {
@@ -359,7 +359,7 @@
         font-weight: 400;
         letter-spacing: 1px;
         line-height: 100%;
-        color: #7B7B7B;
+        color: #595959;
     }
 
     .blanc-div-gift-subtext {
@@ -405,7 +405,7 @@
         letter-spacing: 1px;
         line-height: 150%;
         font-weight: 600;
-        color: #7B7B7B;
+        color: #595959;
         margin: 0;
     }
 
@@ -413,6 +413,6 @@
         font-size: 14px;
         line-height: 150%;
         letter-spacing: 1px;
-        color: #7B7B7B;
+        color: #595959;
         margin: 0;
     }
