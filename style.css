@@ -146,6 +146,10 @@
     .blanc-text-description {
         font-size: 20px;
     }
+    .blanc-section-description {
+        padding-top: 32px;
+        padding-bottom: 32px;
+    }
     }
 
     /* Segundo Bloco */
