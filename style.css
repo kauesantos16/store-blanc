@@ -10,7 +10,7 @@
 
     @media (max-width: 767px) {
     .blanc-font-great {
-        font-size: 32px;
+        font-size: 40px;
     }
     }
 
@@ -160,7 +160,7 @@
 
     @media (max-width: 767px) {
     .blanc-text-description {
-        font-size: 20px;
+        font-size: 16px;
     }
     .blanc-section-description {
         padding-top: 32px;
