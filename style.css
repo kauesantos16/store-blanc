@@ -8,6 +8,12 @@
         font-weight: 400;
     }
 
+    @media (max-width: 767px) {
+    .blanc-font-great {
+        font-size: 32px;
+    }
+    }
+
     * {
     box-sizing: border-box;
     }
@@ -90,6 +96,16 @@
         display: flex !important;
         align-items: center;
         gap: 16px;
+    }
+
+    @media (max-width: 767px) {
+    blanc-item-header img {
+        width: 24px;
+        height: 24px;
+    }
+    blanc-item-header h2 {
+        font-size: 20px;
+    }
     }
 
     .blanc-list-ul li {
@@ -303,6 +319,17 @@
     }
 
      /* Quinto Bloco */
+    blanc-section-highlights {
+        padding-bottom: 120px;
+    }
+
+    @media (max-width: 767px) {
+    blanc-section-highlights {
+            padding-bottom: 32px;
+    }
+    }
+
+
     .blanc-section-highlights {
         gap: 8px;
     }
