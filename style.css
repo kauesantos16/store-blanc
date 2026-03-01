@@ -302,6 +302,10 @@
     }
 
      /* Quinto Bloco */
+    .blanc-section-highlights {
+        gap: 8px;
+    }
+
     @media (max-width: 767px) {
     .blanc-section-highlights {
         gap: 56px;
