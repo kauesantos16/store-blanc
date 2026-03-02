@@ -48,6 +48,21 @@
         font-size: 24px;
     }
 
+    .blanc-item-block1 img {
+        width: 32px;
+        height: 32px;
+    }
+
+    @media (max-width: 767px) {
+    .blanc-item-block1 h2 {
+        grid-template-columns: 20px;
+    }
+    .blanc-item-block1 img {
+        width: 24px;
+        height: 24px;
+    }
+    }
+
     .blanc-item-block2 h2 {
         font-size: 16px;
         font-weight: 500;
@@ -98,12 +113,8 @@
     }
 
     @media (max-width: 767px) {
-    blanc-item-header img {
-        width: 24px;
-        height: 24px;
-    }
-    blanc-item-header h2 {
-        font-size: 20px;
+    .blanc-item-header {
+        gap: 12px;
     }
     }
 
@@ -244,7 +255,7 @@
     /* Terceiro Bloco */
     .blanc-section-details {
         padding-top: 100px;
-        padding-bottom: 60px;
+        padding-bottom: 24px;
     }
 
     .blanc-list-ul {
