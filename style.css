@@ -36,7 +36,6 @@
     .blanc-grid-two {
         display: grid !important;
         grid-template-columns: 1fr 1fr;
-        padding-bottom: 120px;
     }
 
     @media (max-width: 767px) {
