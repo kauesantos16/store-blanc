@@ -77,11 +77,17 @@
 
     .blanc-text {
         font-size: 14px;
-        max-width: 420px;
+        max-width: 80%;
         text-align: left;
         line-height: 150%;
         letter-spacing: 1px;
         color: #595959;
+    }
+
+    @media (max-width: 767px) {
+    .blanc-text {
+        max-width: 100%;
+    }
     }
 
     .blanc-text2 {
