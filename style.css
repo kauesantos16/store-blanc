@@ -110,11 +110,12 @@
         display: flex !important;
         align-items: center;
         gap: 16px;
+        padding-bottom: 8px;
     }
 
     @media (max-width: 767px) {
     .blanc-item-header {
-        gap: 12px;
+        gap: 8px;
     }
     }
 
@@ -129,8 +130,8 @@
     }
 
     .blanc-list-details {
-        padding-left: 40px;
-        padding-right: 40px;
+        padding-left: 32px;
+        padding-right: 32px;
     }
 
     .blanc-div-link {
@@ -288,6 +289,7 @@
     @media (max-width: 767px) {
     .blanc-section-guarantee {
         flex-direction: column;
+        padding-bottom: 64px;
     }
     }
 
@@ -432,13 +434,21 @@
     @media (max-width: 767px) {
     .blanc-grid-three {
         grid-template-columns: 1fr;
+        row-gap: 40px
     }
     }
 
     .blanc-section-faq {
+        padding-top: 100px;
         padding-bottom: 100px;
         display: flex !important;
         flex-direction: column;
+    }
+
+    @media (max-width: 767px) {
+    .blanc-section-faq {
+        padding-top: 64px;
+    }
     }
 
     .blanc-section-faq h2 {
