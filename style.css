@@ -129,8 +129,8 @@
     }
 
     .blanc-list-details {
-        padding-left: 48px;
-        padding-right: 48px;
+        padding-left: 24px;
+        padding-right: 24px;
     }
 
     .blanc-div-link {
@@ -256,6 +256,12 @@
     .blanc-section-details {
         padding-top: 100px;
         padding-bottom: 24px;
+    }
+
+    @media (max-width: 767px) {
+    .blanc-section-details {
+        padding-top: 64px;
+    }
     }
 
     .blanc-list-ul {
