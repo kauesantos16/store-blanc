@@ -130,8 +130,15 @@
     }
 
     .blanc-list-details {
+        padding-left: 48px;
+        padding-right: 48px;
+    }
+
+    @media (max-width: 767px) {
+    .blanc-list-details {
         padding-left: 32px;
         padding-right: 32px;
+    }
     }
 
     .blanc-div-link {
