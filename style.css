@@ -55,7 +55,7 @@
 
     @media (max-width: 767px) {
     .blanc-item-block1 h2 {
-        grid-template-columns: 20px;
+        grid-template-columns: 18px;
     }
     .blanc-item-block1 img {
         width: 24px;
@@ -129,8 +129,8 @@
     }
 
     .blanc-list-details {
-        padding-left: 24px;
-        padding-right: 24px;
+        padding-left: 40px;
+        padding-right: 40px;
     }
 
     .blanc-div-link {
