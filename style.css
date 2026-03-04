@@ -449,7 +449,7 @@
         display: grid !important;
         grid-template-columns: 1fr 1fr 1fr;
         column-gap: 56px;
-        row-gap: 56px;
+        row-gap: 0px;
     }
 
     @media (max-width: 767px) {
@@ -516,7 +516,7 @@
     /* Pergunta com a linha fixa embaixo */
     .blanc-faq-header {
       list-style: none;
-      display: flex;
+      display: flex !important;
       justify-content: space-between;
       align-items: center;
       padding: 20px 0;
