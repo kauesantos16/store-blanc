@@ -55,7 +55,7 @@
 
     @media (max-width: 767px) {
     .blanc-item-block1 h2 {
-        grid-template-columns: 18px;
+        font-size: 18px;
     }
     .blanc-item-block1 img {
         width: 24px;
@@ -399,11 +399,16 @@
 
     /* Sexto Bloco */
 
+    .blanc-section-gift {
+        gap: 8px;
+    }
+
     .blanc-div-gift-text {
         display: flex !important;
         align-items: center;
         padding: 80px;
         gap: 32px;
+        background-color: #EDEDED;
     }
 
     @media (max-width: 767px) {
