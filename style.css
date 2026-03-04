@@ -502,51 +502,68 @@
     }
 
     /* Faq Abrir e Fechar */
-    .blanc-faq-container {
+    .blanc-faq-wrapper {
       max-width: 600px;
-      margin: 0 auto;
+      margin: 20px auto;
       font-family: sans-serif;
     }
     
-    /* Item individual com a linha embaixo */
+    /* Item individual (removi a borda daqui) */
     .blanc-faq-item {
-      border-bottom: 1px solid #e0e0e0;
-      padding: 12px 0;
+      margin-bottom: 0;
     }
     
-    /* Cabeçalho clicável */
-    .blanc-faq-summary {
-      list-style: none; /* Remove a seta padrão */
+    /* Pergunta com a linha fixa embaixo */
+    .blanc-faq-header {
+      list-style: none;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-weight: 600;
+      padding: 20px 0;
+      font-weight: 500;
       cursor: pointer;
-      padding: 10px 0;
-      outline: none;
+      color: #333;
+      /* A linha agora fica aqui */
+      border-bottom: 1px solid #eeeeee; 
+      user-select: none;
     }
     
-    /* Esconde a seta padrão no Safari */
-    .blanc-faq-summary::-webkit-details-marker {
+    /* Remove a seta padrão do Chrome/Safari */
+    .blanc-faq-header::-webkit-details-marker {
       display: none;
     }
     
-    /* Estilo do ícone */
+    /* Estilo do ícone + */
     .blanc-faq-icon {
       font-size: 22px;
-      font-weight: 300;
-      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      color: #999;
+      transition: transform 0.3s ease;
       display: inline-block;
+      line-height: 1;
+      margin-left: 10px;
     }
     
-    /* Gira o ícone quando o FAQ abre */
+    /* Gira o ícone quando aberto */
     .blanc-faq-item[open] .blanc-faq-icon {
-      transform: rotate(45deg); /* O + vira um x */
+      transform: rotate(45deg);
     }
     
     /* Conteúdo da resposta */
-    .blanc-faq-content {
-      padding: 5px 0 15px 0;
+    .blanc-faq-body {
+      padding: 15px 0 25px 0; /* Espaçamento interno da resposta */
       color: #666;
+      font-size: 14px;
       line-height: 1.6;
+      animation: blancFade 0.3s ease-out;
+    }
+    
+    /* Opcional: Uma linha extra bem suave no final da resposta 
+       apenas para separar visualmente do próximo item quando aberto */
+    .blanc-faq-item[open] {
+      border-bottom: 1px solid #f9f9f9;
+    }
+    
+    @keyframes blancFade {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
     }
