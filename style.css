@@ -455,7 +455,6 @@
     @media (max-width: 767px) {
     .blanc-grid-three {
         grid-template-columns: 1fr;
-        row-gap: 40px
     }
     }
 
