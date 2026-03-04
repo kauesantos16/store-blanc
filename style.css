@@ -399,16 +399,13 @@
 
     /* Sexto Bloco */
 
-    .blanc-section-gift {
-        gap: 8px;
-    }
-
     .blanc-div-gift-text {
         display: flex !important;
         align-items: center;
         padding: 80px;
         gap: 32px;
         background-color: #EDEDED;
+        aspect-ratio: 1 / 1;
     }
 
     @media (max-width: 767px) {
