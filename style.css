@@ -538,8 +538,6 @@
     
     /* Estilo do ícone + */
     .blanc-faq-icon {
-      font-size: 32px;
-      color: #595959;
       transition: transform 0.3s ease;
       display: inline-block;
       line-height: 1;
