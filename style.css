@@ -518,13 +518,17 @@
       display: flex !important;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 0;
-      font-weight: 500;
+      padding: 24px 0;
+      font-weight: 600;
       cursor: pointer;
-      color: #333;
       /* A linha agora fica aqui */
-      border-bottom: 1px solid #eeeeee; 
+      border-bottom: 1px solid #d5d5d5; 
       user-select: none;
+      font-size: 14px;
+      line-height: 150%;
+      letter-spacing: 1px;
+      color: #595959;
+      margin: 0;
     }
     
     /* Remove a seta padrão do Chrome/Safari */
@@ -534,8 +538,8 @@
     
     /* Estilo do ícone + */
     .blanc-faq-icon {
-      font-size: 22px;
-      color: #999;
+      font-size: 32px;
+      color: #595959;
       transition: transform 0.3s ease;
       display: inline-block;
       line-height: 1;
@@ -549,10 +553,11 @@
     
     /* Conteúdo da resposta */
     .blanc-faq-body {
-      padding: 15px 0 25px 0; /* Espaçamento interno da resposta */
-      color: #666;
+      padding: 24px 0 24px 0; /* Espaçamento interno da resposta */
+      color: #595959;
       font-size: 14px;
-      line-height: 1.6;
+      letter-spacing: 1px;
+      line-height: 150%;
       animation: blancFade 0.3s ease-out;
     }
     
