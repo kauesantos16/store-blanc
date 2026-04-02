@@ -252,8 +252,8 @@ html, body { height: 100%; margin: 0; padding: 0; }
 }
 #blb .btn-cx:hover { background: rgba(255,255,255,.28); }
 #blb .em-tabs {
-  display: flex; background: var(--g1); border-bottom: 1px solid var(--g3);
-  padding: 0 14px; flex-shrink: 0;
+  display: flex; align-items: center; background: var(--g1); border-bottom: 1px solid var(--g3);
+  padding: 0 14px; flex-shrink: 0; gap: 2px;
 }
 #blb .em-tab {
   background: none; border: none; border-bottom: 2px solid transparent;
@@ -263,9 +263,28 @@ html, body { height: 100%; margin: 0; padding: 0; }
 }
 #blb .em-tab:hover { color: var(--blk); }
 #blb .em-tab.active { color: var(--blk); border-bottom-color: var(--blk); }
+#blb .em-tab-dev {
+  background: none; border: none; border-bottom: 2px solid transparent;
+  padding: 8px 10px; font-family: 'Inter', sans-serif; font-size: .6rem;
+  font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--g4);
+  cursor: pointer; transition: color .12s, border-color .12s; margin-bottom: -1px;
+}
+#blb .em-tab-dev:hover { color: var(--g6); }
+#blb .em-tab-dev.active { color: var(--g6); border-bottom-color: var(--g4); }
+#blb .em-tabs-sep {
+  width: 1px; height: 16px; background: var(--g3); margin: 0 6px; flex-shrink: 0;
+}
+#blb .em-tabs-devlabel {
+  font-family: 'Inter', sans-serif; font-size: .55rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--g4); font-weight: 500; padding: 0 2px;
+  white-space: nowrap;
+}
 #blb .em-info {
   background: #fffbe6; border-bottom: 1px solid #e8d96a;
   padding: 8px 14px; font-size: .74rem; color: #6b5000; flex-shrink: 0; line-height: 1.55;
+}
+#blb .em-info.dev {
+  background: var(--g2); border-bottom: 1px solid var(--g3); color: var(--g5);
 }
 #blb .em-body { overflow-y: auto; flex: 1; }
 #blb .cw { background: #0d1117; }
@@ -448,7 +467,7 @@ html, body { height: 100%; margin: 0; padding: 0; }
   <div class="eo" id="blb-eo" onclick="BLB.closeExpBg(event)">
     <div class="em">
       <div class="em-hd">
-        <h2>Código gerado para Tray</h2>
+        <h2>Código gerado para Wbuy</h2>
         <div class="em-hd-r">
           <button class="btn-cp" id="blb-cpbtn" onclick="BLB.copyCode()">Copiar</button>
           <button class="btn-cx" onclick="BLB.closeExport()">✕</button>
@@ -456,12 +475,14 @@ html, body { height: 100%; margin: 0; padding: 0; }
       </div>
       <div class="em-tabs">
         <button class="em-tab active" id="blb-tab-html" onclick="BLB.switchTab('html',this)">HTML</button>
-        <button class="em-tab" id="blb-tab-css" onclick="BLB.switchTab('css',this)">CSS</button>
-        <button class="em-tab" id="blb-tab-js" onclick="BLB.switchTab('js',this)">JS</button>
-        <button class="em-tab" id="blb-tab-js2" onclick="BLB.switchTab('js2',this)">JS (vídeo)</button>
+        <div class="em-tabs-sep"></div>
+        <span class="em-tabs-devlabel">Dev</span>
+        <button class="em-tab-dev" id="blb-tab-css" onclick="BLB.switchTab('css',this)">CSS</button>
+        <button class="em-tab-dev" id="blb-tab-js" onclick="BLB.switchTab('js',this)">JS</button>
+        <button class="em-tab-dev" id="blb-tab-js2" onclick="BLB.switchTab('js2',this)">JS vídeo</button>
       </div>
       <div class="em-info" id="blb-em-info">
-        ℹ Cole o <strong>HTML</strong> no campo Descrição do produto na Tray. CSS e JS nos campos correspondentes.
+        ℹ Cole o <strong>HTML</strong> no campo Descrição do produto na Wbuy.
       </div>
       <div class="em-body">
         <div class="cw">
@@ -1572,15 +1593,15 @@ const BLB = (() => {
   // EXPORT MODAL
   // ───────────────────────────────────────────
   const TAB_INFO = {
-    html: 'ℹ Cole o <strong>HTML</strong> no campo Descrição do produto na Tray.',
-    css:  'ℹ Cole o <strong>CSS</strong> no campo de CSS personalizado da Tray.',
-    js:   'ℹ Cole o <strong>JS</strong> (renderCustomWidgets) no campo de JavaScript da Tray. Requer jQuery.',
-    js2:  'ℹ Cole o <strong>JS do vídeo</strong> no campo de JavaScript da Tray (junto com o JS principal).',
+    html: 'ℹ Cole o <strong>HTML</strong> no campo Descrição do produto na Wbuy.',
+    css:  '⚙ <strong>Referência dev</strong> — CSS personalizado. Cole no campo de CSS da Wbuy (configurado pela agência).',
+    js:   '⚙ <strong>Referência dev</strong> — JS (renderCustomWidgets). Cole no campo de JavaScript da Wbuy. Requer jQuery.',
+    js2:  '⚙ <strong>Referência dev</strong> — JS do vídeo. Cole no campo de JavaScript da Wbuy junto com o JS principal.',
   };
 
   function openExport() {
     expTab = 'html';
-    document.querySelectorAll('#blb .em-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('#blb .em-tab, #blb .em-tab-dev').forEach(t => t.classList.remove('active'));
     document.getElementById('blb-tab-html').classList.add('active');
     document.getElementById('blb-clang').textContent = 'HTML';
     document.getElementById('blb-em-info').innerHTML = TAB_INFO.html;
@@ -1590,11 +1611,13 @@ const BLB = (() => {
 
   function switchTab(tab, btn) {
     expTab = tab;
-    document.querySelectorAll('#blb .em-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('#blb .em-tab, #blb .em-tab-dev').forEach(t => t.classList.remove('active'));
     btn.classList.add('active');
     const labels = { html: 'HTML', css: 'CSS', js: 'JavaScript', js2: 'JavaScript (vídeo)' };
     document.getElementById('blb-clang').textContent = labels[tab];
-    document.getElementById('blb-em-info').innerHTML = TAB_INFO[tab];
+    const infoEl = document.getElementById('blb-em-info');
+    infoEl.innerHTML = TAB_INFO[tab];
+    infoEl.classList.toggle('dev', tab !== 'html');
     let code = '';
     if (tab === 'html')      code = genHTML();
     else if (tab === 'css')  code = genCSS();
