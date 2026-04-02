@@ -1,203 +1,1640 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acessórios Blanc - Modelo PDP #01</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blanc Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET
+   ============================================================ */
+#blb *, #blb *::before, #blb *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; margin: 0; padding: 0; }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+/* ============================================================
+   BUILDER SHELL
+   ============================================================ */
+#blb {
+  --blk: #111111;
+  --wht: #ffffff;
+  --g1: #f9f9f9;
+  --g2: #f2f2f2;
+  --g3: #e5e5e5;
+  --g4: #cccccc;
+  --g5: #999999;
+  --g6: #595959;
+  --lw: 220px;
+  --rw: 292px;
+  --th: 46px;
+  font-family: 'Inter', sans-serif;
+  background: var(--g2);
+  color: var(--blk);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+/* TOPBAR */
+#blb .topbar {
+  height: var(--th);
+  background: var(--blk);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  flex-shrink: 0;
+  z-index: 200;
+}
+#blb .brand { display: flex; align-items: center; gap: 12px; color: #fff; }
+#blb .brand-name { font-size: .78rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; }
+#blb .brand-sep { width: 1px; height: 14px; background: rgba(255,255,255,.2); }
+#blb .brand-sub { font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.4); font-weight: 400; }
+#blb .btn-exp {
+  background: #fff; color: var(--blk); border: none; padding: 6px 16px;
+  font-family: 'Inter', sans-serif; font-size: .66rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; cursor: pointer; transition: background .15s;
+}
+#blb .btn-exp:hover { background: var(--g3); }
 
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+/* SHELL */
+#blb .shell { display: flex; flex: 1; overflow: hidden; }
 
-	<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">	
+/* LEFT SIDEBAR */
+#blb .sb-left {
+  width: var(--lw); background: var(--wht); border-right: 1px solid var(--g3);
+  display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden;
+}
+#blb .sb-hd { padding: 14px 14px 12px; border-bottom: 1px solid var(--g3); flex-shrink: 0; }
+#blb .sb-lbl { font-size: .6rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--g5); }
+#blb .sec-list { flex: 1; overflow-y: auto; padding: 8px; }
 
-    <link href="https://kauesantos16.github.io/store-blanc/style.css" rel="stylesheet">
+/* ADD SECTION MENU */
+#blb .add-wrap { position: relative; margin-bottom: 8px; }
+#blb .btn-add-sec {
+  width: 100%; background: none; border: 1.5px dashed var(--g3); border-radius: 3px;
+  padding: 7px 10px; font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 600;
+  color: var(--g6); cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+  transition: border-color .12s, color .12s; letter-spacing: .04em;
+}
+#blb .btn-add-sec:hover { border-color: var(--blk); color: var(--blk); }
+#blb .sec-menu {
+  position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+  background: var(--wht); border: 1px solid var(--g3); border-radius: 3px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.12); z-index: 300; overflow: hidden;
+  display: none; animation: blb-fd .12s ease;
+}
+#blb .sec-menu.open { display: block; }
+@keyframes blb-fd { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+#blb .sm-item {
+  display: flex; align-items: center; gap: 8px; padding: 8px 11px; cursor: pointer;
+  font-size: .78rem; color: var(--blk); transition: background .1s;
+  border-bottom: 1px solid var(--g2);
+}
+#blb .sm-item:last-child { border-bottom: none; }
+#blb .sm-item:hover { background: var(--g1); }
+#blb .sm-item-name { font-weight: 500; font-size: .76rem; }
+#blb .sm-item-tag {
+  font-size: .55rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  padding: 1px 5px; border-radius: 2px; margin-left: auto; flex-shrink: 0;
+}
+#blb .sm-item-tag.ed { background: var(--g2); color: var(--g6); }
+#blb .sm-item-tag.fx { background: var(--g1); color: var(--g5); }
 
-	<style>
-		body {
-        font-family: 'Raleway', sans-serif;
-    }
-	</style>
-	
+/* SECTION ITEM */
+#blb .si {
+  display: flex; align-items: center; gap: 6px; padding: 7px 8px;
+  border: 1px solid transparent; border-radius: 3px; cursor: pointer;
+  transition: all .12s; margin-bottom: 2px; user-select: none;
+}
+#blb .si:hover { background: var(--g1); border-color: var(--g3); }
+#blb .si.active { background: var(--blk); border-color: var(--blk); }
+#blb .si-num { font-size: .6rem; font-weight: 600; color: var(--g5); width: 14px; flex-shrink: 0; text-align: center; }
+#blb .si.active .si-num { color: rgba(255,255,255,.35); }
+#blb .si-info { flex: 1; min-width: 0; }
+#blb .si-name { font-size: .76rem; font-weight: 500; color: var(--blk); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#blb .si.active .si-name { color: #fff; }
+#blb .si-acts { display: flex; gap: 1px; flex-shrink: 0; opacity: 0; transition: opacity .1s; }
+#blb .si:hover .si-acts, #blb .si.active .si-acts { opacity: 1; }
+#blb .si-btn {
+  width: 20px; height: 20px; border: none; background: none; cursor: pointer;
+  border-radius: 2px; display: flex; align-items: center; justify-content: center;
+  font-size: .6rem; color: var(--g5); transition: background .1s, color .1s;
+}
+#blb .si.active .si-btn { color: rgba(255,255,255,.5); }
+#blb .si-btn:hover { background: rgba(0,0,0,.08); color: var(--blk); }
+#blb .si.active .si-btn:hover { background: rgba(255,255,255,.15); color: #fff; }
+#blb .si-btn.del:hover { background: #ffeaea !important; color: #c0392b !important; }
+
+/* CENTER */
+#blb .center { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+#blb .cbar {
+  height: 34px; background: var(--g1); border-bottom: 1px solid var(--g3);
+  display: flex; align-items: center; padding: 0 14px; gap: 10px; flex-shrink: 0;
+}
+#blb .cbar-lbl { font-size: .6rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--g5); }
+#blb .wdots { display: flex; gap: 5px; }
+#blb .wdots span { width: 9px; height: 9px; border-radius: 50%; }
+#blb .cbody { flex: 1; overflow-y: auto; padding: 20px; }
+#blb .cbody::-webkit-scrollbar { width: 5px; }
+#blb .cbody::-webkit-scrollbar-thumb { background: var(--g3); border-radius: 3px; }
+#blb .pframe {
+  background: var(--wht); border: 1px solid var(--g3);
+  box-shadow: 0 2px 16px rgba(0,0,0,.07); max-width: 900px; margin: 0 auto; overflow: hidden;
+}
+
+/* RIGHT SIDEBAR */
+#blb .sb-right {
+  width: var(--rw); background: var(--wht); border-left: 1px solid var(--g3);
+  display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden; transition: width .2s ease;
+}
+#blb .sb-right.collapsed { width: 0; border-left: none; }
+#blb .ed-hd {
+  height: 34px; background: var(--g1); border-bottom: 1px solid var(--g3);
+  display: flex; align-items: center; padding: 0 12px; gap: 7px; flex-shrink: 0;
+}
+#blb .ed-hd-title {
+  font-size: .72rem; font-weight: 600; color: var(--blk); flex: 1;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: .03em;
+}
+#blb .ed-bd { flex: 1; overflow-y: auto; padding: 10px; }
+#blb .ed-bd::-webkit-scrollbar { width: 4px; }
+#blb .ed-bd::-webkit-scrollbar-thumb { background: var(--g3); border-radius: 2px; }
+#blb .ed-empty {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  height: 100%; gap: 6px; color: var(--g5); font-size: .76rem; text-align: center;
+  padding: 24px; line-height: 1.6;
+}
+
+/* PANELS */
+#blb .ep { border: 1px solid var(--g3); border-radius: 3px; margin-bottom: 8px; overflow: hidden; }
+#blb .ep:last-child { margin-bottom: 0; }
+#blb .ep-hd {
+  background: var(--g1); border-bottom: 1px solid var(--g3); padding: 7px 11px;
+  display: flex; align-items: center; gap: 6px;
+  font-size: .62rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--g6);
+}
+#blb .ep-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--blk); flex-shrink: 0; }
+#blb .ep-bd { padding: 10px; }
+#blb .fr { margin-bottom: 9px; }
+#blb .fr:last-child { margin-bottom: 0; }
+#blb label.lb {
+  display: block; font-size: .59rem; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--g5); margin-bottom: 3px;
+}
+#blb input[type=text].inp, #blb textarea.inp {
+  width: 100%; background: var(--g1); border: 1px solid var(--g3); border-radius: 2px;
+  padding: 6px 9px; font-family: 'Inter', sans-serif; font-size: .8rem; color: var(--blk);
+  outline: none; transition: border-color .15s; resize: none;
+}
+#blb input[type=text].inp:focus, #blb textarea.inp:focus { border-color: var(--blk); }
+#blb textarea.inp { line-height: 1.55; }
+#blb .hint { font-size: .64rem; color: var(--g5); margin-top: 3px; font-style: italic; }
+
+/* REPEATABLE */
+#blb .rl { display: flex; flex-direction: column; gap: 5px; margin-bottom: 7px; }
+#blb .ri { border: 1px solid var(--g3); border-radius: 2px; background: var(--g1); }
+#blb .ri-hd {
+  display: flex; align-items: center; gap: 5px; padding: 4px 7px;
+  background: var(--g2); border-bottom: 1px solid var(--g3);
+}
+#blb .ri-num { font-size: .57rem; font-weight: 700; color: var(--g5); background: var(--g3); border-radius: 2px; padding: 1px 4px; }
+#blb .ri-lbl { flex: 1; font-size: .68rem; font-weight: 500; color: var(--g6); }
+#blb .ri-del {
+  background: none; border: none; cursor: pointer; color: var(--g5);
+  font-size: .65rem; padding: 2px 4px; border-radius: 2px;
+  font-family: 'Inter', sans-serif; transition: background .12s, color .12s;
+}
+#blb .ri-del:hover { background: #ffeaea; color: #c0392b; }
+#blb .ri-bd { padding: 6px; }
+#blb .btn-ai {
+  width: 100%; background: none; border: 1.5px dashed var(--g3); border-radius: 2px;
+  padding: 6px; font-family: 'Inter', sans-serif; font-size: .72rem; color: var(--g6);
+  cursor: pointer; font-weight: 500; transition: border-color .12s, color .12s;
+}
+#blb .btn-ai:hover { border-color: var(--blk); color: var(--blk); }
+
+/* FIXED NOTICE */
+#blb .fn { background: var(--g1); border: 1px solid var(--g3); border-radius: 3px; padding: 12px; }
+#blb .fn-title { font-size: .76rem; font-weight: 600; color: var(--blk); margin-bottom: 2px; }
+#blb .fn-sub { font-size: .68rem; color: var(--g5); line-height: 1.5; }
+
+/* EXPORT MODAL */
+#blb .eo {
+  position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 500;
+  display: none; align-items: center; justify-content: center; padding: 20px;
+}
+#blb .eo.open { display: flex; }
+#blb .em {
+  background: var(--wht); width: 100%; max-width: 720px; max-height: 90vh;
+  display: flex; flex-direction: column; overflow: hidden;
+  border: 1px solid var(--g3); animation: blb-up .16s ease;
+}
+@keyframes blb-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+#blb .em-hd {
+  background: var(--blk); padding: 13px 16px;
+  display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+}
+#blb .em-hd h2 { color: #fff; font-size: .76rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+#blb .em-hd-r { display: flex; gap: 8px; align-items: center; }
+#blb .btn-cp {
+  background: #fff; border: none; color: var(--blk); padding: 5px 12px;
+  font-size: .64rem; font-family: 'Inter', sans-serif; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; cursor: pointer; transition: background .12s;
+}
+#blb .btn-cp:hover { background: var(--g3); }
+#blb .btn-cp.ok { background: #27ae60; color: #fff; }
+#blb .btn-cx {
+  background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.2); color: #fff;
+  width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: .8rem; transition: background .12s;
+}
+#blb .btn-cx:hover { background: rgba(255,255,255,.28); }
+#blb .em-tabs {
+  display: flex; background: var(--g1); border-bottom: 1px solid var(--g3);
+  padding: 0 14px; flex-shrink: 0;
+}
+#blb .em-tab {
+  background: none; border: none; border-bottom: 2px solid transparent;
+  padding: 8px 12px; font-family: 'Inter', sans-serif; font-size: .66rem;
+  font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--g5);
+  cursor: pointer; transition: color .12s, border-color .12s; margin-bottom: -1px;
+}
+#blb .em-tab:hover { color: var(--blk); }
+#blb .em-tab.active { color: var(--blk); border-bottom-color: var(--blk); }
+#blb .em-info {
+  background: #fffbe6; border-bottom: 1px solid #e8d96a;
+  padding: 8px 14px; font-size: .74rem; color: #6b5000; flex-shrink: 0; line-height: 1.55;
+}
+#blb .em-body { overflow-y: auto; flex: 1; }
+#blb .cw { background: #0d1117; }
+#blb .ct {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 7px 13px; background: #161b22; border-bottom: 1px solid #30363d;
+}
+#blb .clang { font-size: .62rem; color: #6e7681; letter-spacing: .05em; }
+#blb .ca {
+  color: #e6edf3; font-family: 'Courier New', monospace; font-size: .68rem;
+  line-height: 1.65; padding: 13px 15px; overflow-x: auto; white-space: pre;
+  max-height: 54vh; overflow-y: auto;
+}
+#blb .ca::-webkit-scrollbar { width: 4px; height: 4px; }
+#blb .ca::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+
+/* TOAST */
+#blb .toast {
+  position: fixed; bottom: 18px; right: 18px; background: var(--blk); color: #fff;
+  padding: 8px 14px; font-size: .75rem; font-family: 'Inter', sans-serif;
+  letter-spacing: .03em; box-shadow: 0 3px 14px rgba(0,0,0,.2);
+  transform: translateY(50px); opacity: 0; transition: transform .22s, opacity .22s; z-index: 999;
+}
+#blb .toast.on { transform: translateY(0); opacity: 1; }
+
+/* ============================================================
+   BLANC PREVIEW STYLES  (scoped under #blb .pframe)
+   ============================================================ */
+#blb .pframe { font-family: 'Montserrat', sans-serif; color: #111; }
+#blb .pframe .px { padding-left: 40px; padding-right: 40px; }
+
+/* Resumo */
+#blb .pframe .blanc-section-description { padding-top: 64px; padding-bottom: 64px; }
+#blb .pframe .blanc-text-description { max-width: 720px; font-size: 1rem; font-weight: 300; line-height: 1.65; letter-spacing: .02em; color: #111; }
+
+/* Slide marquee */
+#blb .pframe .blanc-section-slide {
+  width: 100%; overflow: hidden; white-space: nowrap; display: flex; position: relative;
+  padding: 12px 0;
+}
+#blb .pframe .blanc-marquee-gradient { width: 40px; height: 100%; position: absolute; z-index: 1; top: 0; }
+#blb .pframe .blanc-marquee-gradient.left { background: linear-gradient(to right,#fff 0%,transparent 100%); left: 0; }
+#blb .pframe .blanc-marquee-gradient.right { background: linear-gradient(to left,#fff 0%,transparent 100%); right: 0; }
+#blb .pframe .marquee-content {
+  display: flex; align-items: center; gap: 28px;
+  animation: blc-scroll 22s linear infinite; flex-shrink: 0;
+}
+#blb .pframe .marquee-content span { font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #111; white-space: nowrap; }
+#blb .pframe .marquee-content img { width: 14px; height: 14px; flex-shrink: 0; }
+@keyframes blc-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* Detalhes */
+#blb .pframe .blanc-section-details { padding-top: 56px; padding-bottom: 20px; }
+#blb .pframe .blanc-grid-two { display: grid; grid-template-columns: 1fr 1fr; }
+#blb .pframe .blanc-item-block1 h2 { font-size: 1.1rem; font-weight: 600; color: #111; }
+#blb .pframe .blanc-item-header { display: flex; align-items: center; gap: 12px; padding-bottom: 10px; }
+#blb .pframe .blanc-item-header img { width: 28px; height: 28px; }
+#blb .pframe .blanc-item-header .icon-ph { width: 28px; height: 28px; background: #e5e5e5; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+#blb .pframe .blanc-list-details { padding-left: 40px; padding-right: 16px; }
+#blb .pframe .blanc-list-ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+#blb .pframe .blanc-list-ul li { color: #595959; font-size: .85rem; line-height: 1.55; }
+#blb .pframe .blanc-list-ul li strong { color: #111; font-weight: 600; }
+
+/* Garantia */
+#blb .pframe .blanc-section-guarantee { display: flex; width: 100%; padding-top: 36px; padding-bottom: 56px; }
+#blb .pframe .blanc-guarantee-block-left {
+  border: 1px solid #111; padding: 14px 18px; display: flex; width: fit-content;
+  gap: 8px; align-items: center; flex-shrink: 0;
+}
+#blb .pframe .blanc-guarantee-block-left p { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+#blb .pframe .blanc-guarantee-block-left img { width: 14px; height: 14px; flex-shrink: 0; }
+#blb .pframe .blanc-guarantee-block-right {
+  flex: 1; background: #f4f4f4; padding: 14px 22px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+#blb .pframe .blanc-guarantee-block-right p { font-size: .83rem; color: #595959; line-height: 1.55; }
+#blb .pframe .blanc-guarantee-block-right strong { color: #111; font-weight: 600; }
+#blb .pframe .blanc-div-link { display: inline-flex; flex-direction: column; padding-bottom: 2px; border-bottom: 1px solid #595959; }
+#blb .pframe .blanc-link { text-decoration: none; font-size: .7rem; color: #111; letter-spacing: .06em; font-weight: 600; white-space: nowrap; }
+
+/* Destaques */
+#blb .pframe .blanc-section-highlights { gap: 8px; padding-bottom: 56px; }
+#blb .pframe .blanc-highlight-item { display: flex; flex-direction: column; gap: 12px; }
+#blb .pframe .blanc-highlight-item h2 { font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+#blb .pframe .blanc-item-sticky { display: flex; flex-direction: column; gap: 12px; }
+#blb .pframe .blanc-img-quadrada { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
+#blb .pframe .blanc-text,
+#blb .pframe .blanc-text2 { font-size: .82rem; line-height: 1.6; letter-spacing: .02em; color: #595959; max-width: 85%; }
+#blb .pframe .blanc-text strong,
+#blb .pframe .blanc-text2 strong { color: #111; font-weight: 600; }
+#blb .pframe .video-ph {
+  width: 100%; aspect-ratio: 1/1; background: #f2f2f2;
+  display: flex; align-items: center; justify-content: center;
+  color: #aaa; font-size: .78rem; font-style: italic; letter-spacing: .04em;
+}
+
+/* FAQ */
+#blb .pframe .blanc-section-faq { padding-top: 56px; padding-bottom: 56px; display: flex; flex-direction: column; }
+#blb .pframe .blanc-section-faq h2 { font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 14px; }
+#blb .pframe .blanc-grid-three { display: grid; grid-template-columns: 1fr 1fr 1fr; column-gap: 36px; }
+#blb .pframe .blanc-faq-item { display: flex; flex-direction: column; }
+#blb .pframe .blanc-faq-header {
+  list-style: none; display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 0; font-weight: 600; cursor: pointer; border-bottom: 1px solid #d5d5d5;
+  font-size: .8rem; line-height: 1.5; letter-spacing: .01em; color: #595959; margin: 0;
+  user-select: none;
+}
+#blb .pframe .blanc-faq-header::-webkit-details-marker { display: none; }
+#blb .pframe .blanc-faq-icon { transition: transform .3s; display: inline-block; line-height: 1; margin-left: 8px; flex-shrink: 0; }
+#blb .pframe .blanc-faq-item[open] .blanc-faq-icon { transform: rotate(45deg); }
+#blb .pframe .blanc-faq-body { padding: 12px 0; color: #595959; font-size: .8rem; letter-spacing: .01em; line-height: 1.6; }
+
+/* Para Presente */
+#blb .pframe .blanc-section-gift { }
+#blb .pframe .blanc-div-gift-text {
+  display: flex; align-items: center; padding: 40px; gap: 20px;
+  background: #ededed; aspect-ratio: 1/1;
+}
+#blb .pframe .blanc-wrapper-gift-text { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+#blb .pframe .blanc-wrapper-gift-text h2 { font-family: 'Great Vibes', cursive; font-size: 2.4rem; font-weight: 400; color: #111; line-height: 1; }
+#blb .pframe .blanc-div-gift-subtext { display: flex; flex-direction: column; gap: 6px; }
+#blb .pframe .blanc-wrapper-gift-text h3 { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #111; }
+#blb .pframe .blanc-wrapper-gift-text p { font-size: .8rem; letter-spacing: .02em; line-height: 1.6; color: #595959; }
+</style>
 </head>
 <body>
+<div id="blb">
 
-    <!-- Container Default -->
-    <div class="blanc-container">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-name">B L A N C</span>
+      <span class="brand-sep"></span>
+      <span class="brand-sub">Builder de Descrição</span>
+    </div>
+    <button class="btn-exp" onclick="BLB.openExport()">↗ Exportar código</button>
+  </header>
 
-	<!-- RESUMO -->
-	<div class="blanc-section-description">
-	<p class="blanc-text-description">O colar de p&eacute;rolas &eacute; um cl&aacute;ssico que atravessa gera&ccedil;&otilde;es, carregando hist&oacute;rias, promessas e mem&oacute;rias. Cada p&eacute;rola nasce no sil&ecirc;ncio do tempo formada com delicadeza, paci&ecirc;ncia e transforma&ccedil;&atilde;o. Assim como as mulheres que a usam.</p>
-	</div>
-	<!-- FIM DO RESUMO -->
-	<!-- SLIDE DE TEXTO -->
-	<div class="blanc-section-slide">
-                <div class="blanc-marquee-gradient left"> </div>
-                <div class="blanc-marquee-gradient right"> </div>
-                <div class="marquee-content">
-                    <span class="blanc-text-slide blanc-font">+50 MIL CLIENTES SATISFEITAS</span>
-					<img class="" src="https://res.cloudinary.com/dxhusg166/image/upload/v1772222915/icon_diamond_dark_dlqs0u.svg" alt="" width="20px" height="20px">
-					<span class="blanc-text-slide blanc-font">DESDE 2019 NO MERCADO</span>
-					<img class="" src="https://res.cloudinary.com/dxhusg166/image/upload/v1772222915/icon_diamond_dark_dlqs0u.svg" alt="" width="20px" height="20px">
-					<span class="blanc-text-slide blanc-font">ATENDIMENTO HUMANIZADO</span>
-					<img class="" src="https://res.cloudinary.com/dxhusg166/image/upload/v1772222915/icon_diamond_dark_dlqs0u.svg" alt="" width="20px" height="20px">
-					<span class="blanc-text-slide blanc-font">+50 MIL CLIENTES SATISFEITAS</span>
-					<img class="" src="https://res.cloudinary.com/dxhusg166/image/upload/v1772222915/icon_diamond_dark_dlqs0u.svg" alt="" width="20px" height="20px">
-					<span class="blanc-text-slide blanc-font">DESDE 2019 NO MERCADO</span>
-					<img class="" src="https://res.cloudinary.com/dxhusg166/image/upload/v1772222915/icon_diamond_dark_dlqs0u.svg" alt="" width="20px" height="20px">
-					<span class="blanc-text-slide blanc-font">ATENDIMENTO HUMANIZADO</span>
-					<img class="" src="https://res.cloudinary.com/dxhusg166/image/upload/v1772222915/icon_diamond_dark_dlqs0u.svg" alt="" width="20px" height="20px">
-					<span class="blanc-text-slide blanc-font">+50 MIL CLIENTES SATISFEITAS</span></div>
-                </div>
-    </div>
-	<!-- FIM DO SLIDE DE TEXTO -->
-	<!-- SOBRE MATERIAL E TAMANHO -->
-	<div class="blanc-grid-two blanc-section-details">
-	<div class="blanc-item-block1">
-	<div class="blanc-item-header"><img class="" src="https://res.cloudinary.com/dxhusg166/image/upload/v1772222916/icon_object_dark_s2gkq9.svg" alt="" aria-hidden="true" width="32px" height="32px">
-	<h2>Material</h2>
-	</div>
-	<div class="blanc-list-details">
-	<ul class="blanc-list-ul">
-	<li>Semijoia Banhada a Ouro 18k ou R&oacute;dio Branco</li>
-	<li>Finalizada com Verniz que protege a pe&ccedil;a contra oxida&ccedil;&atilde;o e garante maior durabilidade</li>
-	<li class="black"><strong>Antial&eacute;rgica</strong>: livre de N&iacute;quel e segura para sua pele 🤍</li>
-	</ul>
-	</div>
-	</div>
-	<div class="blanc-item-block1">
-	<div class="blanc-item-header"><img class="" src="https://res.cloudinary.com/dxhusg166/image/upload/v1772222916/icon_dimensions_dark_oxtrda.svg" alt="" aria-hidden="true" width="32px" height="32px">
-	<h2>Dimensões</h2>
-	</div>
-	<div class="blanc-list-details">
-	<ul class="blanc-list-ul">
-	<li>16cm (Comprimento) + 4,5cm (Extensor)</li>
-	<li>Modelo ajust&aacute;vel que se adapta &agrave; maioria dos pulsos.</li>
-	</ul>
-	</div>
-	</div>
-	</div>
-	<!-- FIM MATERIAL E TAMANHO -->
-	<!-- SOBRE GARANTIA -->
-	<div class="blanc-section-guarantee">
-                <div class="blanc-guarantee-block-left">
-                    <img src="https://res.cloudinary.com/dxhusg166/image/upload/v1772222915/icon_star_dark_krk3i5.svg" alt="Garantia" width="16" height="16">
-                    <p>GARANTIA BLANC</p>
-                </div>
-                <div class="blanc-guarantee-block-right">
-                    <p><strong>6 meses de garantia</strong> em todas as peças. Esse é nosso compromisso com você.</p>
-                    <div class="blanc-div-link"><a class="blanc-link" href="https://www.acessoriosblanc.com.br/m/garantia/">SAIBA MAIS</a></div>
-                </div>
-    </div>
-	<!-- FIM DA GARANTIA -->
-	<!-- EMBALAGEM E QUALIDADE -->
-	<div class="blanc-grid-two blanc-section-highlights">
-                <div class="blanc-highlight-item">
-                    <h2 class="blanc-font">EMBALAGEM PREMIUM</h2>
-                    <div class="video-wrapper" style="width: 100%; margin: 0 auto;">
-                        <video id="video-blanc" style="aspect-ratio: 1 / 1; width: 100%; object-fit: cover; display: block; pointer-events: none;" preload="auto" autoplay loop muted playsinline>
-                            <source src="https://res.cloudinary.com/dxhusg166/video/upload/f_auto,q_auto/v1772394116/video-blanc-embalagem_drxqdw.webm" type="video/webm">
-                            <source src="https://res.cloudinary.com/dxhusg166/video/upload/f_auto,q_auto/v1772058687/video-blanc-embalagem_wpgx9h.mp4" type="video/mp4">
-                            Seu navegador não suporta vídeo.
-                        </video>
-                    </div>
-                    <p class="blanc-text blanc-font"><strong>Para nós, cada detalhe importa.</strong> Pensamos cuidadosamente em cada elemento da nossa embalagem para que o momento de receber sua caixinha seja especial e que sua experiência seja única desde o primeiro instante.</p>
-                </div>
-                <div class="blanc-highlight-item">
-                    <div class="blanc-item-sticky">
-                        <h2 class="blanc-font">QUALIDADE GARANTIDA</h2>
-                        <img class="blanc-img-quadrada" src="https://res.cloudinary.com/dxhusg166/image/upload/v1772633563/semijoias-produzidas-no-brasil_xzzazn.webp" alt="Qualidade Garantida">
-                        <p class="blanc-text2 blanc-font"><strong>Qualidade é o nosso principal compromisso com você.</strong> Todas as nossas peças são produzidas no Brasil por parceiros altamente qualificados e passam por um rigoroso controle de qualidade. Por confiarmos nesse processo, todas as peças possuem garantia.</p>
-                    </div>
-                </div>
-    </div>
-	<!-- FIM EMBALAGEM E QUALIDADE -->
-	<!-- FAQ -->
-	<div class="blanc-section-faq">
-                <h2>PERGUNTAS FREQUENTES</h2>
-                <div class="blanc-grid-three">
-                   <details class="blanc-faq-item">
-						<summary class="blanc-faq-header">
-						  Tenho alergia, as peças são antialérgicas?
-						 <svg class="blanc-faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M9.16675 9.16666V4.16666H10.8334V9.16666H15.8334V10.8333H10.8334V15.8333H9.16675V10.8333H4.16675V9.16666H9.16675Z" fill="#595959"/>
-						 </svg>
-						</summary>
-						<div class="blanc-faq-body">
-						  <p>Sim, todas as nossas peças são livres de níquel (o principal causador de alergias). Recebemos muitos relatos de clientes que são suuuper alérgicas e elogiam muito as nossas peças. Então pode ficar despreocupada :) . E claro, se após receber e usar, perceber qualquer reação na sua pele, você tem 7 dias para entrar em contato com a gente, solicitar a devolução e devolvemos seu dinheiro sem problema algum.</p>
-						</div>
-				  </details>
-                   <details class="blanc-faq-item">
-						<summary class="blanc-faq-header">
-						  As peças escurecem com o tempo?
-						<svg class="blanc-faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M9.16675 9.16666V4.16666H10.8334V9.16666H15.8334V10.8333H10.8334V15.8333H9.16675V10.8333H4.16675V9.16666H9.16675Z" fill="#595959"/>
-						 </svg>
-						</summary>
-						<div class="blanc-faq-body">
-						  <p>Além das diversas camadas de Ouro 18k ou Ródio, nossas peças são finalizadas com verniz que protege ainda mais a peça contra oxidação. Toda a semijoia pode sofrer alteração com o tempo, a depender dos cuidados de cada um. Mas seguindo os cuidados básicos pode ter certeza que sua semijoia vai durar MUITO. Temos um ótimo feedback das nossas clientes com relação a durabilidade. E por confiarmos tanto na nossa qualidade, oferecemos garantia em todas as peças.</p>
-						</div>
-				  </details>
-                   <details class="blanc-faq-item">
-						<summary class="blanc-faq-header">
-						  Se eu não gostar posso trocar/devolver?
-						 <svg class="blanc-faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M9.16675 9.16666V4.16666H10.8334V9.16666H15.8334V10.8333H10.8334V15.8333H9.16675V10.8333H4.16675V9.16666H9.16675Z" fill="#595959"/>
-						 </svg>
-						</summary>
-						<div class="blanc-faq-body">
-						  <p>Claro, não se preocupe. Você têm 7 dias após o recebimento do seu pedido para manifestar o interesse de trocar/devolver o seu produto SEM CUSTO ALGUM. Para nós o mais importante é que vocês estejam satisfeitas com a compra. Para mais detalhes consulte a seção "TROCAS/DEVOLUÇÕES"</p>
-						</div>
-				  </details>
-                </div>
-    </div>
-	<!-- FIM DO FAQ -->
-	<!-- SOBRE PRESENTE -->
-	<div class="blanc-grid-two blanc-section-gift">
-                <div><img class="blanc-img-quadrada" src="https://res.cloudinary.com/dxhusg166/image/upload/v1772638633/semijoia-para-presente_pynoyg.webp" alt="Guia de Presentes"></div>
-                <div class="blanc-div-gift-text">
-                    <div class="blanc-wrapper-gift-text">
-                        <h2 class="blanc-font-great">Guia de Presentes</h2>
-                        <div class="blanc-div-gift-subtext">
-                            <h3>PRESENTEAR FICOU FÁCIL</h3>
-                            <p>Sugestões de presentes perfeitos para transformar momentos em memórias inesquecíveis.</p>
-                        </div>
-                        <div class="blanc-div-link"><a class="blanc-link" href="https://www.acessoriosblanc.com.br/para-presentear/">ACESSAR SUGESTÕES</a></div>
-                    </div>
-                </div>
-    </div>
-	<!-- FIM DO PRESENTE PRESENTE -->
+  <div class="shell">
 
-    <!-- Fim do Container -->
+    <!-- LEFT SIDEBAR -->
+    <aside class="sb-left">
+      <div class="sb-hd">
+        <div class="sb-lbl" style="margin-bottom:10px">Seções</div>
+        <div class="add-wrap">
+          <button class="btn-add-sec" onclick="BLB.toggleMenu()">+ Adicionar seção <span>▾</span></button>
+          <div class="sec-menu" id="blb-smenu"></div>
+        </div>
+      </div>
+      <div class="sec-list" id="blb-slist"></div>
+    </aside>
+
+    <!-- CENTER PREVIEW -->
+    <main class="center">
+      <div class="cbar">
+        <div class="wdots">
+          <span style="background:#ff5f57"></span>
+          <span style="background:#febc2e"></span>
+          <span style="background:#28c840"></span>
+        </div>
+        <span class="cbar-lbl">Preview — página do produto</span>
+      </div>
+      <div class="cbody">
+        <div class="pframe" id="blb-preview"></div>
+      </div>
+    </main>
+
+    <!-- RIGHT EDITOR -->
+    <aside class="sb-right collapsed" id="blb-sbr">
+      <div class="ed-hd">
+        <span class="ed-hd-title" id="blb-ed-title">Editor</span>
+      </div>
+      <div class="ed-bd" id="blb-ed-body">
+        <div class="ed-empty">Selecione uma seção para editar.</div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- EXPORT MODAL -->
+  <div class="eo" id="blb-eo" onclick="BLB.closeExpBg(event)">
+    <div class="em">
+      <div class="em-hd">
+        <h2>Código gerado para Tray</h2>
+        <div class="em-hd-r">
+          <button class="btn-cp" id="blb-cpbtn" onclick="BLB.copyCode()">Copiar</button>
+          <button class="btn-cx" onclick="BLB.closeExport()">✕</button>
+        </div>
+      </div>
+      <div class="em-tabs">
+        <button class="em-tab active" id="blb-tab-html" onclick="BLB.switchTab('html',this)">HTML</button>
+        <button class="em-tab" id="blb-tab-css" onclick="BLB.switchTab('css',this)">CSS</button>
+        <button class="em-tab" id="blb-tab-js" onclick="BLB.switchTab('js',this)">JS</button>
+        <button class="em-tab" id="blb-tab-js2" onclick="BLB.switchTab('js2',this)">JS (vídeo)</button>
+      </div>
+      <div class="em-info" id="blb-em-info">
+        ℹ Cole o <strong>HTML</strong> no campo Descrição do produto na Tray. CSS e JS nos campos correspondentes.
+      </div>
+      <div class="em-body">
+        <div class="cw">
+          <div class="ct"><span class="clang" id="blb-clang">HTML</span></div>
+          <div class="ca" id="blb-ca"></div>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="toast" id="blb-toast"></div>
+</div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const video = document.getElementById('video-blanc');
+const BLB = (() => {
+  // ───────────────────────────────────────────
+  // META — tipos disponíveis
+  // ───────────────────────────────────────────
+  const META = {
+    resumo:    { lbl: 'Resumo',         editable: true },
+    detalhes:  { lbl: 'Detalhes',       editable: true },
+    slide:     { lbl: 'Slide de Texto', editable: false },
+    garantia:  { lbl: 'Garantia',       editable: false },
+    destaques: { lbl: 'Destaques',      editable: false },
+    faq:       { lbl: 'FAQ',            editable: false },
+    presente:  { lbl: 'Para Presente',  editable: false },
+  };
 
-    // Força as propriedades via JS antes de dar o play
-    video.muted = true;
-    video.defaultMuted = true; // Reforço para Safari
-    video.playsInline = true;
+  // ───────────────────────────────────────────
+  // UTILS
+  // ───────────────────────────────────────────
+  function uid() { return 'bi' + Date.now() + Math.floor(Math.random() * 9999); }
+  function xe(s) {
+    return String(s || '')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function toast(msg) {
+    const t = document.getElementById('blb-toast');
+    t.textContent = msg; t.classList.add('on');
+    setTimeout(() => t.classList.remove('on'), 2200);
+  }
 
-    const iniciarVideo = () => {
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((err) => {
-          console.warn('Autoplay bloqueado. Tentando novamente no primeiro toque.', err);
-          // Tenta tocar assim que o usuário interagir com a página
-          document.addEventListener('touchstart', () => video.play(), { once: true });
-        });
+  // ───────────────────────────────────────────
+  // DEFAULT DATA por tipo
+  // ───────────────────────────────────────────
+  function defData(type) {
+    if (type === 'resumo') return {
+      text: 'O colar de p\u00e9rolas \u00e9 um cl\u00e1ssico que atravessa gera\u00e7\u00f5es, carregando hist\u00f3rias, promessas e mem\u00f3rias. Cada p\u00e9rola nasce no sil\u00eancio do tempo formada com delicadeza, paci\u00eancia e transforma\u00e7\u00e3o. Assim como as mulheres que a usam.'
+    };
+    if (type === 'detalhes') return {
+      block1: {
+        items: [
+          { id: uid(), text: 'Semijoia Banhada a Ouro 18k ou R\u00f3dio Branco' },
+          { id: uid(), text: 'Finalizada com Verniz que protege a pe\u00e7a contra oxida\u00e7\u00e3o e garante maior durabilidade' },
+          { id: uid(), text: '<strong>Antial\u00e9rgica</strong>: livre de N\u00edquel e segura para sua pele 🤍' },
+        ]
+      },
+      block2: {
+        items: [
+          { id: uid(), text: '16cm (Comprimento) + 4,5cm (Extensor)' },
+          { id: uid(), text: 'Modelo ajust\u00e1vel que se adapta \u00e0 maioria dos pulsos.' },
+        ]
       }
     };
+    return {};
+  }
 
-    iniciarVideo();
+  // ───────────────────────────────────────────
+  // STATE — lista dinâmica de seções
+  // ───────────────────────────────────────────
+  let secs = [
+    { id: uid(), type: 'resumo',    data: defData('resumo') },
+    { id: uid(), type: 'slide',     data: {} },
+    { id: uid(), type: 'detalhes',  data: defData('detalhes') },
+    { id: uid(), type: 'garantia',  data: {} },
+    { id: uid(), type: 'destaques', data: {} },
+    { id: uid(), type: 'faq',       data: {} },
+    { id: uid(), type: 'presente',  data: {} },
+  ];
+
+  let activeId = null;
+  let expTab   = 'html';
+  let dragSrc  = null;
+
+  function gsec(id) { return secs.find(s => s.id === id); }
+
+  // ───────────────────────────────────────────
+  // SECTION OPS
+  // ───────────────────────────────────────────
+  function addSec(type) {
+    closeMenu();
+    const s = { id: uid(), type, data: defData(type) };
+    secs.push(s);
+    renderSB(); renderPreview();
+    selectSec(s.id);
+    toast('Seção "' + META[type].lbl + '" adicionada');
+  }
+
+  function delSec(id) {
+    secs = secs.filter(s => s.id !== id);
+    if (activeId === id) { activeId = secs.length ? secs[0].id : null; }
+    renderSB(); renderPreview();
+    if (activeId) selectSec(activeId); else collapseEditor();
+  }
+
+  function moveSec(id, dir) {
+    const i = secs.findIndex(s => s.id === id);
+    const ni = i + dir;
+    if (ni < 0 || ni >= secs.length) return;
+    [secs[i], secs[ni]] = [secs[ni], secs[i]];
+    renderSB(); renderPreview();
+  }
+
+  // ───────────────────────────────────────────
+  // SIDEBAR
+  // ───────────────────────────────────────────
+  function renderMenu() {
+    const menu = document.getElementById('blb-smenu');
+    menu.innerHTML = '';
+    Object.entries(META).forEach(([type, m]) => {
+      const el = document.createElement('div');
+      el.className = 'sm-item';
+      el.innerHTML = `
+        <div class="sm-item-name">${xe(m.lbl)}</div>
+        <span class="sm-item-tag ${m.editable ? 'ed' : 'fx'}">${m.editable ? 'Editável' : 'Fixo'}</span>`;
+      el.addEventListener('click', () => addSec(type));
+      menu.appendChild(el);
+    });
+  }
+
+  function renderSB() {
+    const list = document.getElementById('blb-slist');
+    list.innerHTML = '';
+    if (!secs.length) {
+      list.innerHTML = '<div style="text-align:center;padding:20px 12px;color:#999;font-size:.75rem;font-style:italic">Nenhuma seção.<br>Clique em + Adicionar.</div>';
+      return;
+    }
+    secs.forEach((s, i) => {
+      const m = META[s.type];
+      const el = document.createElement('div');
+      el.className = `si${activeId === s.id ? ' active' : ''}`;
+      el.draggable = true;
+      el.innerHTML = `
+        <span class="si-num">${i + 1}</span>
+        <div class="si-info"><div class="si-name">${xe(m.lbl)}</div></div>
+        <div class="si-acts">
+          <button class="si-btn" title="Subir" onclick="event.stopPropagation();BLB.moveSec('${s.id}',-1)">▲</button>
+          <button class="si-btn" title="Descer" onclick="event.stopPropagation();BLB.moveSec('${s.id}',1)">▼</button>
+          <button class="si-btn del" title="Remover" onclick="event.stopPropagation();BLB.delSec('${s.id}')">✕</button>
+        </div>`;
+      el.addEventListener('click', () => selectSec(s.id));
+      // drag & drop
+      el.addEventListener('dragstart', ev => { dragSrc = s.id; ev.dataTransfer.effectAllowed = 'move'; });
+      el.addEventListener('dragover',  ev => { ev.preventDefault(); el.style.outline = '2px solid #999'; });
+      el.addEventListener('dragleave', () => el.style.outline = '');
+      el.addEventListener('drop', ev => {
+        ev.preventDefault(); el.style.outline = '';
+        if (dragSrc === s.id) return;
+        const si = secs.findIndex(x => x.id === dragSrc);
+        const di = secs.findIndex(x => x.id === s.id);
+        const [mv] = secs.splice(si, 1);
+        secs.splice(di, 0, mv);
+        renderSB(); renderPreview();
+      });
+      el.addEventListener('dragend', () => el.style.outline = '');
+      list.appendChild(el);
+    });
+  }
+
+  function selectSec(id) {
+    activeId = id;
+    renderSB();
+    renderEditor();
+    requestAnimationFrame(() => {
+      const el = document.getElementById('blb-sec-' + id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  function toggleMenu() { document.getElementById('blb-smenu').classList.toggle('open'); }
+  function closeMenu()  { document.getElementById('blb-smenu').classList.remove('open'); }
+
+  // ───────────────────────────────────────────
+  // EDITOR
+  // ───────────────────────────────────────────
+  function renderEditor() {
+    const s = gsec(activeId);
+    if (!s) { collapseEditor(); return; }
+    const m = META[s.type];
+    document.getElementById('blb-sbr').classList.remove('collapsed');
+    document.getElementById('blb-ed-title').textContent = m.lbl;
+    const body = document.getElementById('blb-ed-body');
+    body.innerHTML = '';
+    if (s.type === 'resumo')    body.appendChild(buildResumoEditor(s));
+    else if (s.type === 'detalhes') body.appendChild(buildDetalhesEditor(s));
+    else body.appendChild(buildFixedNotice());
+  }
+
+  function collapseEditor() {
+    document.getElementById('blb-sbr').classList.add('collapsed');
+    document.getElementById('blb-ed-body').innerHTML =
+      '<div class="ed-empty">Selecione uma seção para editar.</div>';
+  }
+
+  // Resumo editor
+  function buildResumoEditor(s) {
+    const frag = document.createDocumentFragment();
+    const panel = mkPanel('Texto do resumo');
+    panel.querySelector('.ep-bd').innerHTML = `
+      <div class="fr">
+        <label class="lb">Parágrafo</label>
+        <textarea class="inp" id="blb-resumo-${s.id}" rows="7">${xe(s.data.text)}</textarea>
+        <p class="hint">Texto simples. Sem HTML.</p>
+      </div>`;
+    frag.appendChild(panel);
+    requestAnimationFrame(() => {
+      const ta = document.getElementById('blb-resumo-' + s.id);
+      if (ta) ta.addEventListener('input', function() { s.data.text = this.value; renderPreview(); });
+    });
+    return frag;
+  }
+
+  // Detalhes editor — ícone e título são fixos, só itens editáveis
+  function buildDetalhesEditor(s) {
+    const frag = document.createDocumentFragment();
+    const BLOCK_LABELS = ['Material', 'Dimensões'];
+    ['block1', 'block2'].forEach((blk, idx) => {
+      const panel = mkPanel(BLOCK_LABELS[idx]);
+      panel.querySelector('.ep-bd').innerHTML = `
+        <div class="fr">
+          <label class="lb">Itens da lista</label>
+          <div class="rl" id="blb-${blk}-${s.id}-items"></div>
+          <button class="btn-ai" onclick="BLB.addItem('${s.id}','${blk}')">+ Adicionar item</button>
+          <p class="hint" style="margin-top:5px">Suporta HTML (ex: &lt;strong&gt;texto&lt;/strong&gt;)</p>
+        </div>`;
+      frag.appendChild(panel);
+    });
+    requestAnimationFrame(() => {
+      renderItemsList(s.id, 'block1');
+      renderItemsList(s.id, 'block2');
+    });
+    return frag;
+  }
+
+  function renderItemsList(secId, blk) {
+    const s = gsec(secId);
+    if (!s) return;
+    const list = document.getElementById(`blb-${blk}-${secId}-items`);
+    if (!list) return;
+    list.innerHTML = '';
+    s.data[blk].items.forEach((item, i) => {
+      const el = document.createElement('div');
+      el.className = 'ri';
+      el.innerHTML = `
+        <div class="ri-hd">
+          <span class="ri-num">#${i + 1}</span>
+          <span class="ri-lbl">Item</span>
+          <button class="ri-del" onclick="BLB.remItem('${secId}','${blk}','${item.id}')">✕</button>
+        </div>
+        <div class="ri-bd">
+          <input type="text" class="inp" id="blb-item-${item.id}" value="${xe(item.text)}" placeholder="Texto do item...">
+        </div>`;
+      list.appendChild(el);
+      requestAnimationFrame(() => {
+        const inp = document.getElementById('blb-item-' + item.id);
+        if (inp) inp.addEventListener('input', function() {
+          const sec = gsec(secId);
+          if (!sec) return;
+          const it = sec.data[blk].items.find(x => x.id === item.id);
+          if (it) { it.text = this.value; renderPreview(); }
+        });
+      });
+    });
+  }
+
+  function addItem(secId, blk) {
+    const s = gsec(secId);
+    if (!s) return;
+    s.data[blk].items.push({ id: uid(), text: '' });
+    renderItemsList(secId, blk); renderPreview();
+  }
+  function remItem(secId, blk, iid) {
+    const s = gsec(secId);
+    if (!s) return;
+    s.data[blk].items = s.data[blk].items.filter(x => x.id !== iid);
+    renderItemsList(secId, blk); renderPreview();
+  }
+
+  function buildFixedNotice() {
+    const frag = document.createDocumentFragment();
+    const el = document.createElement('div');
+    el.className = 'fn';
+    el.innerHTML = `
+      <div class="fn-title">Conteúdo fixo</div>
+      <div class="fn-sub">Esta seção não é editável. O conteúdo será incluído automaticamente no código exportado.</div>`;
+    frag.appendChild(el);
+    return frag;
+  }
+
+  function mkPanel(title) {
+    const el = document.createElement('div');
+    el.className = 'ep';
+    el.innerHTML = `<div class="ep-hd"><div class="ep-dot"></div>${xe(title)}</div><div class="ep-bd"></div>`;
+    return el;
+  }
+
+  // ───────────────────────────────────────────
+  // PREVIEW
+  // ───────────────────────────────────────────
+  function renderPreview() {
+    const pc = document.getElementById('blb-preview');
+    pc.innerHTML = secs.map(s =>
+      `<div id="blb-sec-${s.id}">${renderSecPrev(s)}</div>`
+    ).join('');
+  }
+
+  function renderSecPrev(s) {
+    if (s.type === 'resumo')    return prevResumo(s);
+    if (s.type === 'slide')     return prevSlide();
+    if (s.type === 'detalhes')  return prevDetalhes(s);
+    if (s.type === 'garantia')  return prevGarantia();
+    if (s.type === 'destaques') return prevDestaques();
+    if (s.type === 'faq')       return prevFaq();
+    if (s.type === 'presente')  return prevPresente();
+    return '';
+  }
+
+  function prevSlide() {
+    const DIAM = 'https://assets.ks-static.com.br/acessoriosblanc/description01/icon_diamond_dark_01.svg';
+    return `
+      <div class="blanc-section-slide">
+        <div class="blanc-marquee-gradient left"></div>
+        <div class="blanc-marquee-gradient right"></div>
+        <div class="marquee-content">
+          <span>+50 MIL CLIENTES SATISFEITAS</span><img src="${DIAM}" alt="">
+          <span>DESDE 2019 NO MERCADO</span><img src="${DIAM}" alt="">
+          <span>ATENDIMENTO HUMANIZADO</span><img src="${DIAM}" alt="">
+          <span>+50 MIL CLIENTES SATISFEITAS</span><img src="${DIAM}" alt="">
+          <span>DESDE 2019 NO MERCADO</span><img src="${DIAM}" alt="">
+          <span>ATENDIMENTO HUMANIZADO</span><img src="${DIAM}" alt="">
+          <span>+50 MIL CLIENTES SATISFEITAS</span>
+        </div>
+      </div>`;
+  }
+
+  const ICON1 = 'https://assets.ks-static.com.br/acessoriosblanc/description01/icon_object_dark_01.svg';
+  const ICON2 = 'https://assets.ks-static.com.br/acessoriosblanc/description01/icon_dimensions_dark_02.svg';
+
+  function prevResumo(s) {
+    return `
+      <div class="px">
+        <div class="blanc-section-description">
+          <p class="blanc-text-description">${xe(s.data.text)}</p>
+        </div>
+      </div>`;
+  }
+
+  function prevDetalhes(s) {
+    const d = s.data;
+    const TITLES = ['Material', 'Dimens\u00f5es'];
+    const ICONS  = [ICON1, ICON2];
+    const renderBlock = (blk, idx) => {
+      const items = blk.items.map(it => `<li>${it.text || '—'}</li>`).join('');
+      return `
+        <div class="blanc-item-block1">
+          <div class="blanc-item-header"><img src="${ICONS[idx]}" alt=""><h2>${TITLES[idx]}</h2></div>
+          <div class="blanc-list-details"><ul class="blanc-list-ul">${items}</ul></div>
+        </div>`;
+    };
+    return `
+      <div class="px">
+        <div class="blanc-grid-two blanc-section-details">
+          ${renderBlock(d.block1, 0)}
+          ${renderBlock(d.block2, 1)}
+        </div>
+      </div>`;
+  }
+
+  function prevGarantia() {
+    return `
+      <div class="px">
+        <div class="blanc-section-guarantee">
+          <div class="blanc-guarantee-block-left">
+            <img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_star_dark_01.svg" alt="">
+            <p>GARANTIA BLANC</p>
+          </div>
+          <div class="blanc-guarantee-block-right">
+            <p><strong>6 meses de garantia</strong> em todas as peças. Esse é nosso compromisso com você.</p>
+            <div class="blanc-div-link"><a class="blanc-link" href="#">SAIBA MAIS</a></div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function prevDestaques() {
+    return `
+      <div class="px">
+        <div class="blanc-grid-two blanc-section-highlights">
+          <div class="blanc-highlight-item">
+            <h2>EMBALAGEM PREMIUM</h2>
+            <div class="video-ph">▶ vídeo da embalagem</div>
+            <p class="blanc-text"><strong>Para nós, cada detalhe importa.</strong> Pensamos cuidadosamente em cada elemento da nossa embalagem para que o momento de receber sua caixinha seja especial e que sua experiência seja única desde o primeiro instante.</p>
+          </div>
+          <div class="blanc-highlight-item">
+            <div class="blanc-item-sticky">
+              <h2>QUALIDADE GARANTIDA</h2>
+              <img class="blanc-img-quadrada" src="https://assets.ks-static.com.br/acessoriosblanc/description01/semijoias-produzidas-no-brasil_xzzazn.webp" alt="Qualidade Garantida">
+              <p class="blanc-text2"><strong>Qualidade é o nosso principal compromisso com você.</strong> Todas as nossas peças são produzidas no Brasil por parceiros altamente qualificados e passam por um rigoroso controle de qualidade.</p>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function prevFaq() {
+    const faqData = [
+      { q: 'Tenho alergia, as peças são antialérgicas?', a: 'Sim, todas as nossas peças são livres de níquel (o principal causador de alergias). Se após receber e usar, perceber qualquer reação na sua pele, você tem 7 dias para entrar em contato com a gente.' },
+      { q: 'As peças escurecem com o tempo?', a: 'Além das diversas camadas de Ouro 18k ou Ródio, nossas peças são finalizadas com verniz que protege ainda mais contra oxidação. Temos ótimo feedback das nossas clientes com relação à durabilidade.' },
+      { q: 'Se eu não gostar posso trocar/devolver?', a: 'Claro, você tem 7 dias após o recebimento do seu pedido para manifestar o interesse de trocar/devolver o seu produto SEM CUSTO ALGUM.' },
+    ];
+    const items = faqData.map(f => `
+      <details class="blanc-faq-item">
+        <summary class="blanc-faq-header">
+          ${xe(f.q)}
+          <svg class="blanc-faq-icon" width="18" height="18" viewBox="0 0 20 20" fill="none">
+            <path d="M9.167 9.167V4.167h1.666V9.167H15.833v1.666H10.833v5H9.167v-5H4.167V9.167h5Z" fill="#595959"/>
+          </svg>
+        </summary>
+        <div class="blanc-faq-body">${xe(f.a)}</div>
+      </details>`).join('');
+    return `
+      <div class="px">
+        <div class="blanc-section-faq">
+          <h2>PERGUNTAS FREQUENTES</h2>
+          <div class="blanc-grid-three">${items}</div>
+        </div>
+      </div>`;
+  }
+
+  function prevPresente() {
+    return `
+      <div class="blanc-grid-two blanc-section-gift">
+        <div>
+          <img class="blanc-img-quadrada" src="https://assets.ks-static.com.br/acessoriosblanc/description01/semijoia-para-presente.webp" alt="Guia de Presentes">
+        </div>
+        <div class="blanc-div-gift-text">
+          <div class="blanc-wrapper-gift-text">
+            <h2>Guia de Presentes</h2>
+            <div class="blanc-div-gift-subtext">
+              <h3>PRESENTEAR FICOU FÁCIL</h3>
+              <p>Sugestões de presentes perfeitos para transformar momentos em memórias inesquecíveis.</p>
+            </div>
+            <div class="blanc-div-link"><a class="blanc-link" href="#">ACESSAR SUGESTÕES</a></div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // ───────────────────────────────────────────
+  // EXPORT — genHTML (ordem dinâmica)
+  // ───────────────────────────────────────────
+  // IDs de placeholder por tipo (para múltiplas instâncias)
+  function expId(s) {
+    const same = secs.filter(x => x.type === s.type);
+    const idx  = same.indexOf(s) + 1;
+    return 'hz-' + s.type + (same.length > 1 ? '-' + idx : '');
+  }
+
+  const JS_PLACEHOLDERS = {
+    slide:     'js-render-slide-text',
+    garantia:  'js-render-guarantee',
+    destaques: 'js-render-high-light',
+    faq:       'js-render-faq',
+    presente:  'js-render-gift-cta',
+  };
+
+  function genHTML() {
+    const parts = secs.map(s => {
+      if (s.type === 'resumo') {
+        return '<!-- RESUMO -->\n' +
+               '<div class="blanc-section-description">\n' +
+               '  <p class="blanc-text-description">' + xe(s.data.text) + '</p>\n' +
+               '</div>';
+      }
+      if (s.type === 'detalhes') {
+        const items1 = s.data.block1.items.map(it => '        <li>' + it.text + '</li>').join('\n');
+        const items2 = s.data.block2.items.map(it => '        <li>' + it.text + '</li>').join('\n');
+        return '<!-- DETALHES -->\n' +
+'<div class="blanc-grid-two blanc-section-details">\n' +
+'  <div class="blanc-item-block1">\n' +
+'    <div class="blanc-item-header">\n' +
+'      <div id="js-render-item-icon-1"></div>\n' +
+'      <h2>Material</h2>\n' +
+'    </div>\n' +
+'    <div class="blanc-list-details">\n' +
+'      <ul class="blanc-list-ul">\n' + items1 + '\n      </ul>\n' +
+'    </div>\n' +
+'  </div>\n' +
+'  <div class="blanc-item-block1">\n' +
+'    <div class="blanc-item-header">\n' +
+'      <div id="js-render-item-icon-2"></div>\n' +
+'      <h2>Dimens&otilde;es</h2>\n' +
+'    </div>\n' +
+'    <div class="blanc-list-details">\n' +
+'      <ul class="blanc-list-ul">\n' + items2 + '\n      </ul>\n' +
+'    </div>\n' +
+'  </div>\n' +
+'</div>';
+      }
+      // seções fixas: apenas placeholder div
+      const pid = JS_PLACEHOLDERS[s.type];
+      return pid ? '<div id="' + pid + '"></div>' : '';
+    });
+    return parts.filter(Boolean).join('\n\n');
+  }
+
+  // ───────────────────────────────────────────
+  // EXPORT — genCSS
+  // ───────────────────────────────────────────
+  function genCSS() {
+    return "@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');\n\n" +
+"/* Preview */\n\n" +
+"    .blanc-font-great {\n" +
+"        font-family: 'Great Vibes', cursive;\n" +
+"        font-size: 48px;\n" +
+"        font-weight: 400;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-font-great {\n" +
+"        font-size: 40px;\n" +
+"    }\n" +
+"    }\n\n" +
+"    * {\n" +
+"    box-sizing: border-box;\n" +
+"    }\n\n" +
+"    .blanc-container {\n" +
+"        width: 100%;\n" +
+"        max-width: 1280px;\n" +
+"        padding-left: 24px;\n" +
+"        padding-right: 24px;\n" +
+"        margin: 0 auto;\n" +
+"    }\n\n" +
+"    .blanc-img-quadrada {\n" +
+"        width: 100%;\n" +
+"        aspect-ratio: 1/1;\n" +
+"    }\n\n" +
+"    /* Global */\n\n" +
+"    .blanc-grid-two {\n" +
+"        display: grid !important;\n" +
+"        grid-template-columns: 1fr 1fr;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-grid-two {\n" +
+"        grid-template-columns: 1fr;\n" +
+"    }\n" +
+"    }\n\n" +
+"    .blanc-item-block1 h2 {\n" +
+"        font-size: 24px;\n" +
+"    }\n\n" +
+"    .blanc-item-block1 img {\n" +
+"        width: 32px;\n" +
+"        height: 32px;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-item-block1 h2 {\n" +
+"        font-size: 18px;\n" +
+"    }\n" +
+"    .blanc-item-block1 img {\n" +
+"        width: 24px;\n" +
+"        height: 24px;\n" +
+"    }\n" +
+"    }\n\n" +
+"    .blanc-item-block2 h2 {\n" +
+"        font-size: 16px;\n" +
+"        font-weight: 500;\n" +
+"        letter-spacing: 1px;\n" +
+"    }\n\n" +
+"    .blanc-item-block2 {\n" +
+"        display: flex !important;\n" +
+"        gap: 16px;\n" +
+"        flex-direction: column;\n" +
+"    }\n\n" +
+"    .blanc-text {\n" +
+"        font-size: 14px;\n" +
+"        max-width: 80%;\n" +
+"        text-align: left;\n" +
+"        line-height: 150%;\n" +
+"        letter-spacing: 1px;\n" +
+"        color: #595959;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-text {\n" +
+"        max-width: 100%;\n" +
+"    }\n" +
+"    }\n\n" +
+"    .blanc-text2 {\n" +
+"        font-size: 14px;\n" +
+"        max-width: 80%;\n" +
+"        text-align: left;\n" +
+"        line-height: 150%;\n" +
+"        letter-spacing: 1px;\n" +
+"        color: #595959;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-text2 {\n" +
+"        max-width: 100%;\n" +
+"    }\n" +
+"    }\n\n" +
+"    .blanc-text-slide {\n" +
+"        font-size: 16px;\n" +
+"        letter-spacing: 1px;\n" +
+"        color: #111111;\n" +
+"    }\n\n" +
+"    .blanc-gift-right {\n" +
+"        display: flex !important;\n" +
+"        align-items: center;\n" +
+"        justify-content: flex-start;\n" +
+"        padding: 80px;\n" +
+"    }\n\n" +
+"    .blanc-item-header {\n" +
+"        display: flex !important;\n" +
+"        align-items: center;\n" +
+"        gap: 16px;\n" +
+"        padding-bottom: 8px;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-item-header {\n" +
+"        gap: 8px;\n" +
+"    }\n" +
+"    }\n\n" +
+"    .blanc-list-ul li {\n" +
+"        color: #595959;\n" +
+"        line-height: 150%;\n" +
+"    }\n\n" +
+"    .blanc-text-black {\n" +
+"        color: #111111;\n" +
+"        line-height: 150%;\n" +
+"    }\n\n" +
+"    .blanc-list-details {\n" +
+"        padding-left: 48px;\n" +
+"        padding-right: 48px;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-list-details {\n" +
+"        padding-left: 32px;\n" +
+"        padding-right: 32px;\n" +
+"    }\n" +
+"    }\n\n" +
+"    .blanc-div-link {\n" +
+"        display: flex !important;\n" +
+"        flex-direction: column;\n" +
+"        padding-bottom: 4px;\n" +
+"        border-bottom: 1px solid #A3A3A3;\n" +
+"    }\n\n" +
+"    .blanc-link {\n" +
+"        text-decoration: none;\n" +
+"        font-size: 12px;\n" +
+"        color: #111111;\n" +
+"    }\n\n" +
+"    .blanc-item-gift {\n" +
+"        display: flex !important;\n" +
+"        flex-direction: column;\n" +
+"        align-items: flex-start;\n" +
+"    }\n\n" +
+"    /* Primeiro Bloco */\n\n" +
+"    .blanc-section-description {\n" +
+"        padding-top: 100px;\n" +
+"        padding-bottom: 100px;\n" +
+"    }\n\n" +
+"    .blanc-text-description {\n" +
+"        max-width: 760px;\n" +
+"        font-size: 24px;\n" +
+"        font-weight: 300;\n" +
+"        line-height: 150%;\n" +
+"        letter-spacing: 1px;\n" +
+"        width: 100%;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-text-description {\n" +
+"        font-size: 14px;\n" +
+"    }\n" +
+"    .blanc-section-description {\n" +
+"        padding-top: 32px;\n" +
+"        padding-bottom: 64px;\n" +
+"    }\n" +
+"    }\n\n" +
+"    /* Segundo Bloco */\n\n" +
+"    .blanc-section-slide {\n" +
+"        width: 100%;\n" +
+"        overflow: hidden;\n" +
+"        white-space: nowrap;\n" +
+"        display: flex !important;\n" +
+"        position: relative;\n" +
+"    }\n\n" +
+"    .blanc-marquee-gradient {\n" +
+"        width: 48px;\n" +
+"        height: 48px;\n" +
+"        position: absolute;\n" +
+"        z-index: 1;\n" +
+"    }\n\n" +
+"    .blanc-marquee-gradient.left {\n" +
+"        background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);\n" +
+"        left: 0;\n" +
+"    }\n\n" +
+"    .blanc-marquee-gradient.right {\n" +
+"        background: linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);\n" +
+"        right: 0;\n" +
+"    }\n\n" +
+"    .marquee-content {\n" +
+"        display: flex !important;\n" +
+"        align-items: center;\n" +
+"        gap: 40px;\n" +
+"        animation: scroll 20s linear infinite;\n" +
+"    }\n\n" +
+"    .marquee-content span {\n" +
+"        font-size: 14px;\n" +
+"        font-weight: 500;\n" +
+"        letter-spacing: 1px;\n" +
+"    }\n\n" +
+"    .marquee-content img {\n" +
+"        width: 20px;\n" +
+"        height: 20px;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .marquee-content {\n" +
+"        font-size: 24px;\n" +
+"    }\n" +
+"    .marquee-content span {\n" +
+"        font-size: 12px;\n" +
+"    }\n" +
+"    .marquee-content img {\n" +
+"        width: 16px;\n" +
+"        height: 16px;\n" +
+"    }\n" +
+"    }\n\n" +
+"    .icon {\n" +
+"    width: 20px;\n" +
+"    height: 20px;\n" +
+"    }\n\n" +
+"    @keyframes scroll {\n" +
+"    from {\n" +
+"        transform: translateX(0);\n" +
+"    }\n" +
+"    to {\n" +
+"        transform: translateX(-50%);\n" +
+"    }\n" +
+"    }\n\n" +
+"    /* Terceiro Bloco */\n" +
+"    .blanc-section-details {\n" +
+"        padding-top: 100px;\n" +
+"        padding-bottom: 24px;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-section-details {\n" +
+"        padding-top: 64px;\n" +
+"    }\n" +
+"    }\n\n" +
+"    .blanc-list-ul {\n" +
+"        list-style-type: none;\n" +
+"        padding: 0;\n" +
+"        margin: 0;\n" +
+"        display: flex !important;\n" +
+"        flex-direction: column;\n" +
+"        gap: 8px;\n" +
+"    }\n\n" +
+"    /* Quarto Bloco */\n" +
+"    .blanc-section-guarantee {\n" +
+"        display: flex !important;\n" +
+"        flex-direction: row;\n" +
+"        width: 100%;\n" +
+"        padding-bottom: 100px;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-section-guarantee {\n" +
+"        flex-direction: column;\n" +
+"        padding-bottom: 64px;\n" +
+"    }\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-guarantee-block-left {\n" +
+"        min-width: 100%;\n" +
+"    }\n" +
+"    }\n\n" +
+"    .blanc-guarantee-block-left {\n" +
+"        border: solid 1px #000;\n" +
+"        padding-top: 16px;\n" +
+"        padding-bottom: 16px;\n" +
+"        padding-left: 24px;\n" +
+"        padding-right: 24px;\n" +
+"        display: flex !important;\n" +
+"        width: fit-content;\n" +
+"        gap: 8px;\n" +
+"    }\n\n" +
+"    .blanc-guarantee-block-left p {\n" +
+"        width: fit-content;\n" +
+"        font-size: 14px;\n" +
+"    }\n\n" +
+"    .blanc-guarantee-block-right {\n" +
+"        flex: 1;\n" +
+"        display: flex !important;\n" +
+"        flex-direction: row;\n" +
+"        align-items: center;\n" +
+"        background-color: #F4F4F4;\n" +
+"        padding-left: 24px;\n" +
+"        padding-right: 24px;\n" +
+"        gap: 24px;\n" +
+"        justify-content: space-between;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-guarantee-block-right {\n" +
+"        flex-direction: column;\n" +
+"        align-items: flex-start;\n" +
+"        padding-bottom: 24px;\n" +
+"        padding-top: 24px;\n" +
+"    }\n" +
+"    }\n\n" +
+"     /* Quinto Bloco */\n" +
+"    blanc-section-highlights {\n" +
+"        padding-bottom: 120px;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    blanc-section-highlights {\n" +
+"            padding-bottom: 32px;\n" +
+"    }\n" +
+"    }\n\n" +
+"    .blanc-section-highlights {\n" +
+"        gap: 8px;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-section-highlights {\n" +
+"        gap: 56px;\n" +
+"    }\n" +
+"    }\n\n" +
+"    .blanc-highlight-item {\n" +
+"        display: flex !important;\n" +
+"        flex-direction: column;\n" +
+"        gap: 16px;\n" +
+"    }\n\n" +
+"    .blanc-highlight-item h2 {\n" +
+"        line-height: 100%;\n" +
+"        letter-spacing: 1px;\n" +
+"        font-weight: 500;\n" +
+"        font-size: 16px;\n" +
+"    }\n\n" +
+"    .blanc-item-sticky {\n" +
+"        top: 16px;\n" +
+"        display: flex !important;\n" +
+"        flex-direction: column;\n" +
+"        gap: 16px;\n" +
+"    }\n\n" +
+"    /* Sexto Bloco */\n\n" +
+"    .blanc-div-gift-text {\n" +
+"        display: flex !important;\n" +
+"        align-items: center;\n" +
+"        padding: 80px;\n" +
+"        gap: 32px;\n" +
+"        background-color: #EDEDED;\n" +
+"        aspect-ratio: 1 / 1;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-div-gift-text {\n" +
+"        padding: 32px;\n" +
+"    }\n" +
+"    }\n\n" +
+"    .blanc-wrapper-gift-text {\n" +
+"        display: flex !important;\n" +
+"        flex-direction: column;\n" +
+"        align-items: flex-start;\n" +
+"        gap: 32px;\n" +
+"    }\n\n" +
+"    .blanc-wrapper-gift-text p {\n" +
+"        font-size: 14px;\n" +
+"        font-weight: 400;\n" +
+"        letter-spacing: 1px;\n" +
+"        line-height: 150%;\n" +
+"        color: #595959;\n" +
+"    }\n\n" +
+"    .blanc-wrapper-gift-text h3 {\n" +
+"        font-size: 14px;\n" +
+"        font-weight: 400;\n" +
+"        letter-spacing: 1px;\n" +
+"        line-height: 100%;\n" +
+"        color: #595959;\n" +
+"    }\n\n" +
+"    .blanc-div-gift-subtext {\n" +
+"        display: flex !important;\n" +
+"        flex-direction: column;\n" +
+"        gap: 8px;\n" +
+"    }\n\n" +
+"    /* Sétimo Bloco */\n\n" +
+"    .blanc-grid-three {\n" +
+"        display: grid !important;\n" +
+"        grid-template-columns: 1fr 1fr 1fr;\n" +
+"        column-gap: 56px;\n" +
+"        row-gap: 0px;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-grid-three {\n" +
+"        grid-template-columns: 1fr;\n" +
+"    }\n" +
+"    }\n\n" +
+"    .blanc-section-faq {\n" +
+"        padding-top: 100px;\n" +
+"        padding-bottom: 100px;\n" +
+"        display: flex !important;\n" +
+"        flex-direction: column;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-section-faq {\n" +
+"        padding-top: 64px;\n" +
+"    }\n" +
+"    }\n\n" +
+"    .blanc-section-faq h2 {\n" +
+"        font-size: 16px;\n" +
+"        font-weight: 600;\n" +
+"        letter-spacing: 1px;\n" +
+"        margin-bottom: 16px;\n" +
+"    }\n\n" +
+"    .blanc-faq-item {\n" +
+"        display: flex !important;\n" +
+"        flex-direction: column;\n" +
+"    }\n\n" +
+"    .blanc-faq-header {\n" +
+"      list-style: none;\n" +
+"      display: flex !important;\n" +
+"      justify-content: space-between;\n" +
+"      align-items: center;\n" +
+"      padding: 24px 0;\n" +
+"      font-weight: 600;\n" +
+"      cursor: pointer;\n" +
+"      border-bottom: 1px solid #d5d5d5;\n" +
+"      user-select: none;\n" +
+"      font-size: 14px;\n" +
+"      line-height: 150%;\n" +
+"      letter-spacing: 1px;\n" +
+"      color: #595959;\n" +
+"      margin: 0;\n" +
+"    }\n\n" +
+"    .blanc-faq-header::-webkit-details-marker {\n" +
+"      display: none;\n" +
+"    }\n\n" +
+"    .blanc-faq-icon {\n" +
+"      transition: transform 0.3s ease;\n" +
+"      display: inline-block;\n" +
+"      line-height: 1;\n" +
+"      margin-left: 10px;\n" +
+"    }\n\n" +
+"    .blanc-faq-item[open] .blanc-faq-icon {\n" +
+"      transform: rotate(45deg);\n" +
+"    }\n\n" +
+"    .blanc-faq-body {\n" +
+"      padding: 24px 0 24px 0;\n" +
+"      color: #595959;\n" +
+"      font-size: 14px;\n" +
+"      letter-spacing: 1px;\n" +
+"      line-height: 150%;\n" +
+"      animation: blancFade 0.3s ease-out;\n" +
+"    }\n\n" +
+"    .blanc-faq-item[open] {\n" +
+"      border-bottom: 1px solid #f9f9f9;\n" +
+"    }\n\n" +
+"    @keyframes blancFade {\n" +
+"      from { opacity: 0; transform: translateY(-5px); }\n" +
+"      to { opacity: 1; transform: translateY(0); }\n" +
+"    }";
+  }
+
+  // ───────────────────────────────────────────
+  // EXPORT — genJS (renderCustomWidgets)
+  // ───────────────────────────────────────────
+  function genJS() {
+    return '<script>\n' +
+'    function renderCustomWidgets() {\n' +
+'        // 1. Especificações (Marquee)\n' +
+'        $(\'#js-render-slide-text\').html(\n' +
+'            \'<div class="blanc-section-slide">\' +\n' +
+'                \'<div class="blanc-marquee-gradient left"> </div>\' +\n' +
+'                \'<div class="blanc-marquee-gradient right"> </div>\' +\n' +
+'                \'<div class="marquee-content">\' +\n' +
+'                    \'<span class="blanc-text-slide blanc-font">+50 MIL CLIENTES SATISFEITAS</span>\' +\n' +
+'                    \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_diamond_dark_01.svg" alt="" width="20px" height="20px">\' +\n' +
+'                    \'<span class="blanc-text-slide blanc-font">DESDE 2019 NO MERCADO</span>\' +\n' +
+'                    \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_diamond_dark_01.svg" alt="" width="20px" height="20px">\' +\n' +
+'                    \'<span class="blanc-text-slide blanc-font">ATENDIMENTO HUMANIZADO</span>\' +\n' +
+'                    \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_diamond_dark_01.svg" alt="" width="20px" height="20px">\' +\n' +
+'                    \'<span class="blanc-text-slide blanc-font">+50 MIL CLIENTES SATISFEITAS</span>\' +\n' +
+'                    \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_diamond_dark_01.svg" alt="" width="20px" height="20px">\' +\n' +
+'                    \'<span class="blanc-text-slide blanc-font">DESDE 2019 NO MERCADO</span>\' +\n' +
+'                    \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_diamond_dark_01.svg" alt="" width="20px" height="20px">\' +\n' +
+'                    \'<span class="blanc-text-slide blanc-font">ATENDIMENTO HUMANIZADO</span>\' +\n' +
+'                    \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_diamond_dark_01.svg" alt="" width="20px" height="20px">\' +\n' +
+'                    \'<span class="blanc-text-slide blanc-font">+50 MIL CLIENTES SATISFEITAS</span>\' +\n' +
+'                \'</div>\' +\n' +
+'            \'</div>\'\n' +
+'        );\n\n' +
+'        // 2. Garantia\n' +
+'        $(\'#js-render-guarantee\').html(\n' +
+'            \'<div class="blanc-section-guarantee">\' +\n' +
+'                \'<div class="blanc-guarantee-block-left">\' +\n' +
+'                    \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_star_dark_01.svg" alt="Garantia" width="16" height="16">\' +\n' +
+'                    \'<p>GARANTIA BLANC</p>\' +\n' +
+'                \'</div>\' +\n' +
+'                \'<div class="blanc-guarantee-block-right">\' +\n' +
+'                    \'<p><strong>6 meses de garantia</strong> em todas as pe&ccedil;as. Esse &eacute; nosso compromisso com voc&ecirc;.</p>\' +\n' +
+'                    \'<div class="blanc-div-link"><a class="blanc-link" href="https://www.acessoriosblanc.com.br/m/garantia/">SAIBA MAIS</a></div>\' +\n' +
+'                \'</div>\' +\n' +
+'            \'</div>\'\n' +
+'        );\n\n' +
+'        // 3. Highlights (Embalagem e Qualidade)\n' +
+'        $(\'#js-render-high-light\').html(\n' +
+'            \'<div class="blanc-grid-two blanc-section-highlights">\' +\n' +
+'                \'<div class="blanc-highlight-item">\' +\n' +
+'                    \'<h2 class="blanc-font">EMBALAGEM PREMIUM</h2>\' +\n' +
+'                    \'<div class="video-wrapper" style="width:100%;margin:0 auto;">\' +\n' +
+'                        \'<video id="video-blanc" style="aspect-ratio:1/1;width:100%;object-fit:cover;display:block;pointer-events:none;" preload="auto" autoplay loop muted playsinline>\' +\n' +
+'                            \'<source src="https://assets.ks-static.com.br/acessoriosblanc/description01/video-blanc-embalagem_wpgx9h.webm" type="video/webm">\' +\n' +
+'                            \'<source src="https://assets.ks-static.com.br/acessoriosblanc/description01/video-blanc-embalagem_wpgx9h.mp4" type="video/mp4">\' +\n' +
+'                        \'</video>\' +\n' +
+'                    \'</div>\' +\n' +
+'                    \'<p class="blanc-text blanc-font"><strong>Para n&oacute;s, cada detalhe importa.</strong> Pensamos cuidadosamente em cada elemento da nossa embalagem para que o momento de receber sua caixinha seja especial e que sua experi&ecirc;ncia seja &uacute;nica desde o primeiro instante.</p>\' +\n' +
+'                \'</div>\' +\n' +
+'                \'<div class="blanc-highlight-item">\' +\n' +
+'                    \'<div class="blanc-item-sticky">\' +\n' +
+'                        \'<h2 class="blanc-font">QUALIDADE GARANTIDA</h2>\' +\n' +
+'                        \'<img class="blanc-img-quadrada" src="https://assets.ks-static.com.br/acessoriosblanc/description01/semijoias-produzidas-no-brasil_xzzazn.webp" alt="Qualidade Garantida">\' +\n' +
+'                        \'<p class="blanc-text2 blanc-font"><strong>Qualidade &eacute; o nosso principal compromisso com voc&ecirc;.</strong> Todas as nossas pe&ccedil;as s&atilde;o produzidas no Brasil por parceiros altamente qualificados e passam por um rigoroso controle de qualidade. Por confiarmos nesse processo, todas as pe&ccedil;as possu&iacute;em garantia.</p>\' +\n' +
+'                    \'</div>\' +\n' +
+'                \'</div>\' +\n' +
+'            \'</div>\'\n' +
+'        );\n\n' +
+'        // 4. Guia de Presentes\n' +
+'        $(\'#js-render-gift-cta\').html(\n' +
+'            \'<div class="blanc-grid-two blanc-section-gift">\' +\n' +
+'                \'<div><img class="blanc-img-quadrada" src="https://assets.ks-static.com.br/acessoriosblanc/description01/semijoia-para-presente.webp" alt="Guia de Presentes"></div>\' +\n' +
+'                \'<div class="blanc-div-gift-text">\' +\n' +
+'                    \'<div class="blanc-wrapper-gift-text">\' +\n' +
+'                        \'<h2 class="blanc-font-great">Guia de Presentes</h2>\' +\n' +
+'                        \'<div class="blanc-div-gift-subtext">\' +\n' +
+'                            \'<h3>PRESENTEAR FICOU F&Aacute;CIL</h3>\' +\n' +
+'                            \'<p>Sugest&otilde;es de presentes perfeitos para transformar momentos em mem&oacute;rias inesquec&iacute;veis.</p>\' +\n' +
+'                        \'</div>\' +\n' +
+'                        \'<div class="blanc-div-link"><a class="blanc-link" href="https://www.acessoriosblanc.com.br/para-presentear/">ACESSAR SUGEST&Otilde;ES</a></div>\' +\n' +
+'                    \'</div>\' +\n' +
+'                \'</div>\' +\n' +
+'            \'</div>\'\n' +
+'        );\n\n' +
+'        // 5. FAQ\n' +
+'        $(\'#js-render-faq\').html(\n' +
+'            \'<div class="blanc-section-faq">\' +\n' +
+'                \'<h2>PERGUNTAS FREQUENTES</h2>\' +\n' +
+'                \'<div class="blanc-grid-three">\' +\n' +
+'                   \'<details class="blanc-faq-item">\' +\n' +
+'                        \'<summary class="blanc-faq-header">Tenho alergia, as pe&ccedil;as s&atilde;o antial&eacute;rgicas?<svg class="blanc-faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.16675 9.16666V4.16666H10.8334V9.16666H15.8334V10.8333H10.8334V15.8333H9.16675V10.8333H4.16675V9.16666H9.16675Z" fill="#595959"/></svg></summary>\' +\n' +
+'                        \'<div class="blanc-faq-body"><p>Sim, todas as nossas pe&ccedil;as s&atilde;o livres de n&iacute;quel (o principal causador de alergias). Recebemos muitos relatos de clientes que s&atilde;o suuuper al&eacute;rgicas e elogiam muito as nossas pe&ccedil;as. E claro, se ap&oacute;s receber e usar, perceber qualquer rea&ccedil;&atilde;o na sua pele, voc&ecirc; tem 7 dias para entrar em contato.</p></div>\' +\n' +
+'                   \'</details>\' +\n' +
+'                   \'<details class="blanc-faq-item">\' +\n' +
+'                        \'<summary class="blanc-faq-header">As pe&ccedil;as escurecem com o tempo?<svg class="blanc-faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.16675 9.16666V4.16666H10.8334V9.16666H15.8334V10.8333H10.8334V15.8333H9.16675V10.8333H4.16675V9.16666H9.16675Z" fill="#595959"/></svg></summary>\' +\n' +
+'                        \'<div class="blanc-faq-body"><p>Al&eacute;m das diversas camadas de Ouro 18k ou R&oacute;dio, nossas pe&ccedil;as s&atilde;o finalizadas com verniz que protege ainda mais a pe&ccedil;a contra oxida&ccedil;&atilde;o. Por confiarmos tanto na nossa qualidade, oferecemos garantia em todas as pe&ccedil;as.</p></div>\' +\n' +
+'                   \'</details>\' +\n' +
+'                   \'<details class="blanc-faq-item">\' +\n' +
+'                        \'<summary class="blanc-faq-header">Se eu n&atilde;o gostar posso trocar/devolver?<svg class="blanc-faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.16675 9.16666V4.16666H10.8334V9.16666H15.8334V10.8333H10.8334V15.8333H9.16675V10.8333H4.16675V9.16666H9.16675Z" fill="#595959"/></svg></summary>\' +\n' +
+'                        \'<div class="blanc-faq-body"><p>Claro, voc&ecirc; t&ecirc;m 7 dias ap&oacute;s o recebimento do seu pedido para manifestar o interesse de trocar/devolver o seu produto SEM CUSTO ALGUM.</p></div>\' +\n' +
+'                   \'</details>\' +\n' +
+'                \'</div>\' +\n' +
+'            \'</div>\'\n' +
+'        );\n\n' +
+'        // 6. Item Icon 1 (Material)\n' +
+'        $(\'#js-render-item-icon-1\').html(\n' +
+'            \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_object_dark_01.svg" alt="" width="32px" height="32px">\'\n' +
+'        );\n\n' +
+'        // 7. Item Icon 2 (Dimensoes)\n' +
+'        $(\'#js-render-item-icon-2\').html(\n' +
+'            \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_dimensions_dark_02.svg" alt="" width="32px" height="32px">\'\n' +
+'        );\n' +
+'    }\n\n' +
+'    $(document).ready(function() {\n' +
+'        renderCustomWidgets();\n' +
+'    });\n' +
+'<\/script>';
+  }
+
+  // ───────────────────────────────────────────
+  // EXPORT — genJS2 (video script)
+  // ───────────────────────────────────────────
+  function genJS2() {
+    return '<script>\n' +
+'  document.addEventListener(\'DOMContentLoaded\', () => {\n' +
+'    const video = document.getElementById(\'video-blanc\');\n' +
+'    if (!video) return;\n\n' +
+'    video.muted = true;\n' +
+'    video.defaultMuted = true;\n' +
+'    video.playsInline = true;\n\n' +
+'    const iniciarVideo = () => {\n' +
+'      const playPromise = video.play();\n' +
+'      if (playPromise !== undefined) {\n' +
+'        playPromise.catch((err) => {\n' +
+'          console.warn(\'Autoplay bloqueado. Tentando novamente no primeiro toque.\', err);\n' +
+'          document.addEventListener(\'touchstart\', () => video.play(), { once: true });\n' +
+'        });\n' +
+'      }\n' +
+'    };\n\n' +
+'    iniciarVideo();\n' +
+'  });\n' +
+'<\/script>';
+  }
+
+  // ───────────────────────────────────────────
+  // EXPORT MODAL
+  // ───────────────────────────────────────────
+  const TAB_INFO = {
+    html: 'ℹ Cole o <strong>HTML</strong> no campo Descrição do produto na Tray.',
+    css:  'ℹ Cole o <strong>CSS</strong> no campo de CSS personalizado da Tray.',
+    js:   'ℹ Cole o <strong>JS</strong> (renderCustomWidgets) no campo de JavaScript da Tray. Requer jQuery.',
+    js2:  'ℹ Cole o <strong>JS do vídeo</strong> no campo de JavaScript da Tray (junto com o JS principal).',
+  };
+
+  function openExport() {
+    expTab = 'html';
+    document.querySelectorAll('#blb .em-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('blb-tab-html').classList.add('active');
+    document.getElementById('blb-clang').textContent = 'HTML';
+    document.getElementById('blb-em-info').innerHTML = TAB_INFO.html;
+    document.getElementById('blb-ca').textContent = genHTML();
+    document.getElementById('blb-eo').classList.add('open');
+  }
+
+  function switchTab(tab, btn) {
+    expTab = tab;
+    document.querySelectorAll('#blb .em-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    const labels = { html: 'HTML', css: 'CSS', js: 'JavaScript', js2: 'JavaScript (vídeo)' };
+    document.getElementById('blb-clang').textContent = labels[tab];
+    document.getElementById('blb-em-info').innerHTML = TAB_INFO[tab];
+    let code = '';
+    if (tab === 'html')      code = genHTML();
+    else if (tab === 'css')  code = genCSS();
+    else if (tab === 'js')   code = genJS();
+    else if (tab === 'js2')  code = genJS2();
+    document.getElementById('blb-ca').textContent = code;
+  }
+
+  function closeExport() { document.getElementById('blb-eo').classList.remove('open'); }
+  function closeExpBg(e) { if (e.target === document.getElementById('blb-eo')) closeExport(); }
+
+  function copyCode() {
+    navigator.clipboard.writeText(document.getElementById('blb-ca').textContent).then(() => {
+      const b = document.getElementById('blb-cpbtn');
+      b.textContent = '✓ Copiado'; b.classList.add('ok');
+      toast('Código copiado!');
+      setTimeout(() => { b.textContent = 'Copiar'; b.classList.remove('ok'); }, 2200);
+    });
+  }
+
+  // ───────────────────────────────────────────
+  // INIT
+  // ───────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    renderMenu();
+    renderSB();
+    renderPreview();
+    // fecha menu ao clicar fora
+    document.addEventListener('click', ev => {
+      if (!ev.target.closest('.add-wrap')) closeMenu();
+    });
   });
+
+  return {
+    openExport, closeExport, closeExpBg, switchTab, copyCode,
+    addItem, remItem,
+    addSec, delSec, moveSec, selectSec,
+    toggleMenu, closeMenu,
+  };
+})();
 </script>
-    
 </body>
 </html>
