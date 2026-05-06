@@ -554,20 +554,20 @@
 
     .blanc-banner-grid-2 {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr !important;
         gap: 8px;
     }
 
     .blanc-banner-grid-3 {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr !important;
         gap: 8px;
     }
 
     @media (max-width: 767px) {
     .blanc-banner-grid-2,
     .blanc-banner-grid-3 {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
         row-gap: 8px;
     }
     }
