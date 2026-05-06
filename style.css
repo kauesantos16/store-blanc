@@ -542,3 +542,31 @@
       from { opacity: 0; transform: translateY(-5px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    /* Banners */
+    .blanc-section-faq-title {
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin-bottom: 16px;
+        color: #111111;
+    }
+
+    .blanc-banner-grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .blanc-banner-grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
+    }
+
+    @media (max-width: 767px) {
+    .blanc-banner-grid-2,
+    .blanc-banner-grid-3 {
+        grid-template-columns: 1fr;
+    }
+    }
