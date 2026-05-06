@@ -70,6 +70,17 @@ html, body { height: 100%; margin: 0; padding: 0; }
 #blb .sb-lbl { font-size: .6rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--g5); }
 #blb .sec-list { flex: 1; overflow-y: auto; padding: 8px; }
 
+/* MODEL PICKER */
+#blb .model-pick { display: flex; gap: 4px; margin-bottom: 10px; }
+#blb .mp-btn {
+  flex: 1; background: none; border: 1.5px solid var(--g3); border-radius: 3px;
+  padding: 5px 4px; font-family: 'Inter', sans-serif; font-size: .6rem; font-weight: 600;
+  letter-spacing: .04em; text-transform: uppercase; color: var(--g5);
+  cursor: pointer; transition: all .12s; line-height: 1.3; text-align: center;
+}
+#blb .mp-btn:hover { border-color: var(--blk); color: var(--blk); }
+#blb .mp-btn.active { background: var(--blk); border-color: var(--blk); color: #fff; }
+
 /* ADD SECTION MENU */
 #blb .add-wrap { position: relative; margin-bottom: 8px; }
 #blb .btn-add-sec {
@@ -381,6 +392,34 @@ html, body { height: 100%; margin: 0; padding: 0; }
   color: #aaa; font-size: .78rem; font-style: italic; letter-spacing: .04em;
 }
 
+/* Banners Combine */
+#blb .pframe .blanc-section-banners { padding: 40px 0 56px; }
+#blb .pframe .blanc-banners-title { font-size: .62rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #111; margin-bottom: 10px; }
+#blb .pframe .blanc-banners-grid { display: grid; gap: 8px; }
+#blb .pframe .blanc-banners-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+#blb .pframe .blanc-banners-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+#blb .pframe .blanc-banner-card { display: block; text-decoration: none; border: 1px solid #ddd; }
+#blb .pframe .blanc-banner-card img { width: 100%; height: auto; display: block; }
+#blb .pframe .blanc-banner-card-ph { width: 100%; aspect-ratio: 3/4; background: #f2f2f2; display: flex; align-items: center; justify-content: center; font-size: .6rem; color: #aaa; font-style: italic; }
+
+/* Destaques Noiva — Carousel */
+#blb .pframe .blanc-carousel { position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden; }
+#blb .pframe .bc-slide { position: absolute; inset: 0; }
+#blb .pframe .bc-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+#blb .pframe .bc-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 36px; height: 36px; background: #fff; border: none; border-radius: 50%;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; padding: 0;
+}
+#blb .pframe .bc-prev { left: 10px; }
+#blb .pframe .bc-next { right: 10px; }
+#blb .pframe .bc-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 0 10px 10px; display: flex; gap: 4px; z-index: 10; box-sizing: border-box;
+}
+#blb .pframe .bc-seg { flex: 1; height: 3px; background: rgba(255,255,255,.35); position: relative; overflow: hidden; }
+#blb .pframe .bc-fill { position: absolute; top: 0; left: 0; height: 100%; width: 0; background: #fff; }
+
 /* FAQ */
 #blb .pframe .blanc-section-faq { padding-top: 56px; padding-bottom: 56px; display: flex; flex-direction: column; }
 #blb .pframe .blanc-section-faq h2 { font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 14px; }
@@ -427,7 +466,13 @@ html, body { height: 100%; margin: 0; padding: 0; }
     <!-- LEFT SIDEBAR -->
     <aside class="sb-left">
       <div class="sb-hd">
-        <div class="sb-lbl" style="margin-bottom:10px">Seções</div>
+        <div class="sb-lbl" style="margin-bottom:8px">Modelo de Produto</div>
+        <div class="model-pick" id="blb-model-pick">
+          <button class="mp-btn active" data-model="padrao"  onclick="BLB.setModel('padrao')">Padrão</button>
+          <button class="mp-btn"        data-model="noiva"   onclick="BLB.setModel('noiva')">Noiva</button>
+          <button class="mp-btn"        data-model="grinalda" onclick="BLB.setModel('grinalda')">Grinalda</button>
+        </div>
+        <div class="sb-lbl" style="margin-bottom:10px; margin-top:12px">Seções</div>
         <div class="add-wrap">
           <button class="btn-add-sec" onclick="BLB.toggleMenu()">+ Adicionar seção <span>▾</span></button>
           <div class="sec-menu" id="blb-smenu"></div>
@@ -506,8 +551,12 @@ const BLB = (() => {
     detalhes:  { lbl: 'Detalhes',       editable: true },
     slide:     { lbl: 'Slide de Texto', editable: false },
     garantia:  { lbl: 'Garantia',       editable: false },
-    destaques: { lbl: 'Destaques',      editable: false },
-    faq:       { lbl: 'FAQ',            editable: false },
+    destaques:      { lbl: 'Destaques',        editable: false },
+    destaquesnoiva:      { lbl: 'Destaques Noiva',      editable: false },
+    destaquesgrinalda:   { lbl: 'Destaques Grinaldas', editable: false },
+    bannersnoiva:        { lbl: 'Banners Noiva',        editable: true  },
+    bannersgrinalda:     { lbl: 'Banners Grinaldas',   editable: true  },
+    faq:                 { lbl: 'FAQ',                  editable: false },
     presente:  { lbl: 'Para Presente',  editable: false },
   };
 
@@ -547,7 +596,50 @@ const BLB = (() => {
         ]
       }
     };
+    if (type === 'bannersnoiva') return {
+      title: 'COMBINE SEU BRINCO COM',
+      banners: [
+        { id: uid(), label: 'PULSEIRAS', img: 'https://assets.ks-static.com.br/acessoriosblanc/description02/banner-pulseiras.webp', href: 'https://www.acessoriosblanc.com.br/pulseiras/' },
+        { id: uid(), label: 'COLARES',   img: 'https://assets.ks-static.com.br/acessoriosblanc/description02/banner-colares.webp',   href: 'https://www.acessoriosblanc.com.br/colares/'   },
+      ]
+    };
+    if (type === 'bannersgrinalda') return {
+      title: 'COMBINE SUA GRINALDA COM',
+      banners: [
+        { id: uid(), label: 'PULSEIRAS', img: 'https://assets.ks-static.com.br/acessoriosblanc/description02/banner-pulseiras.webp', href: 'https://www.acessoriosblanc.com.br/pulseiras/' },
+        { id: uid(), label: 'COLARES',   img: 'https://assets.ks-static.com.br/acessoriosblanc/description02/banner-colares.webp',   href: 'https://www.acessoriosblanc.com.br/colares/'   },
+        { id: uid(), label: 'BRINCOS',   img: 'https://assets.ks-static.com.br/acessoriosblanc/description02/banner-brincos.webp',   href: 'https://www.acessoriosblanc.com.br/brincos/'   },
+      ]
+    };
     return {};
+  }
+
+  // ───────────────────────────────────────────
+  // MODELOS DE PRODUTO
+  // ───────────────────────────────────────────
+  const MODEL_DEFS = {
+    padrao:   ['resumo','slide','detalhes','garantia','destaques','faq','presente'],
+    noiva:    ['resumo','slide','detalhes','garantia','destaquesnoiva','bannersnoiva','faq'],
+    grinalda: ['resumo','slide','detalhes','garantia','destaquesgrinalda','bannersgrinalda','faq'],
+  };
+
+  let activeModel = 'padrao';
+
+  function setModel(model) {
+    if (!MODEL_DEFS[model]) return;
+    activeModel = model;
+    // atualiza botões
+    document.querySelectorAll('#blb-model-pick .mp-btn').forEach(b =>
+      b.classList.toggle('active', b.dataset.model === model)
+    );
+    // reinicia seções com os tipos do modelo escolhido
+    secs = MODEL_DEFS[model].map(type => ({ id: uid(), type, data: defData(type) }));
+    activeId = null;
+    renderMenu();
+    renderSB();
+    renderPreview();
+    collapseEditor();
+    toast('Modelo "' + { padrao:'Padrão', noiva:'Brincos de Noiva', grinalda:'Grinaldas' }[model] + '" ativado');
   }
 
   // ───────────────────────────────────────────
@@ -602,7 +694,9 @@ const BLB = (() => {
   function renderMenu() {
     const menu = document.getElementById('blb-smenu');
     menu.innerHTML = '';
+    const allowed = MODEL_DEFS[activeModel] || Object.keys(META);
     Object.entries(META).forEach(([type, m]) => {
+      if (!allowed.includes(type)) return;
       const el = document.createElement('div');
       el.className = 'sm-item';
       el.innerHTML = `
@@ -678,6 +772,7 @@ const BLB = (() => {
     body.innerHTML = '';
     if (s.type === 'resumo')    body.appendChild(buildResumoEditor(s));
     else if (s.type === 'detalhes') body.appendChild(buildDetalhesEditor(s));
+    else if (s.type === 'bannersnoiva' || s.type === 'bannersgrinalda') body.appendChild(buildBannersEditor(s));
     else body.appendChild(buildFixedNotice());
   }
 
@@ -758,6 +853,43 @@ const BLB = (() => {
     });
   }
 
+  function buildBannersEditor(s) {
+    const frag = document.createDocumentFragment();
+    // título da seção
+    const panelTitle = mkPanel('Título');
+    panelTitle.querySelector('.ep-bd').innerHTML = `
+      <div class="fr">
+        <label class="lb">Texto acima dos banners</label>
+        <input type="text" class="inp" id="blb-btitle-${s.id}" value="${xe(s.data.title)}">
+      </div>`;
+    frag.appendChild(panelTitle);
+    requestAnimationFrame(() => {
+      const inp = document.getElementById('blb-btitle-' + s.id);
+      if (inp) inp.addEventListener('input', function() { s.data.title = this.value; renderPreview(); });
+    });
+    // um painel por banner
+    s.data.banners.forEach((b, i) => {
+      const panel = mkPanel(b.label);
+      panel.querySelector('.ep-bd').innerHTML = `
+        <div class="fr">
+          <label class="lb">URL da imagem</label>
+          <input type="text" class="inp" id="blb-bimg-${b.id}" value="${xe(b.img)}" placeholder="https://...">
+        </div>
+        <div class="fr">
+          <label class="lb">Link da categoria</label>
+          <input type="text" class="inp" id="blb-bhref-${b.id}" value="${xe(b.href)}">
+        </div>`;
+      frag.appendChild(panel);
+      requestAnimationFrame(() => {
+        const imgInp  = document.getElementById('blb-bimg-'  + b.id);
+        const hrefInp = document.getElementById('blb-bhref-' + b.id);
+        if (imgInp)  imgInp.addEventListener('input',  function() { b.img  = this.value; renderPreview(); });
+        if (hrefInp) hrefInp.addEventListener('input', function() { b.href = this.value; renderPreview(); });
+      });
+    });
+    return frag;
+  }
+
   function addItem(secId, blk) {
     const s = gsec(secId);
     if (!s) return;
@@ -797,6 +929,54 @@ const BLB = (() => {
     pc.innerHTML = secs.map(s =>
       `<div id="blb-sec-${s.id}">${renderSecPrev(s)}</div>`
     ).join('');
+    initCarousels();
+  }
+
+  function initCarousels() {
+    document.querySelectorAll('#blb-preview .blanc-carousel').forEach(el => {
+      if (el._bcInit) return;
+      el._bcInit = true;
+      const slides = Array.from(el.querySelectorAll('.bc-slide'));
+      const fills  = Array.from(el.querySelectorAll('.bc-fill'));
+      const n = slides.length;
+      if (!n) return;
+      const INTERVAL = 4000, DUR = 600;
+      let cur = 0, prog = 0, lastTs = null, rafId = null;
+
+      slides.forEach((s, i) => {
+        s.style.transition = `transform ${DUR}ms ease-in-out, opacity ${DUR * .5}ms`;
+        s.style.transform  = i === 0 ? 'translateX(0)' : 'translateX(100%)';
+        s.style.opacity    = i === 0 ? '1' : '0';
+      });
+
+      function go(next, dir) {
+        const prev = cur;
+        cur = next; prog = 0; lastTs = null;
+        slides[prev].style.transform = `translateX(${dir > 0 ? '-100%' : '100%'})`;
+        slides[prev].style.opacity   = '0';
+        slides[next].style.transform = 'translateX(0)';
+        slides[next].style.opacity   = '1';
+        fills.forEach((f, i) => { if (i !== cur) f.style.width = '0'; });
+      }
+
+      function tick(ts) {
+        if (!lastTs) lastTs = ts;
+        prog += (ts - lastTs) / INTERVAL * 100;
+        lastTs = ts;
+        if (fills[cur]) fills[cur].style.width = Math.min(prog, 100) + '%';
+        if (prog >= 100) go((cur + 1) % n, 1);
+        rafId = requestAnimationFrame(tick);
+      }
+      rafId = requestAnimationFrame(tick);
+
+      const obs = new MutationObserver(() => {
+        if (!document.contains(el)) { cancelAnimationFrame(rafId); obs.disconnect(); }
+      });
+      obs.observe(document.body, { childList: true, subtree: true });
+
+      el.querySelector('.bc-prev')?.addEventListener('click', () => go((cur - 1 + n) % n, -1));
+      el.querySelector('.bc-next')?.addEventListener('click', () => go((cur + 1) % n, 1));
+    });
   }
 
   function renderSecPrev(s) {
@@ -804,8 +984,12 @@ const BLB = (() => {
     if (s.type === 'slide')     return prevSlide();
     if (s.type === 'detalhes')  return prevDetalhes(s);
     if (s.type === 'garantia')  return prevGarantia();
-    if (s.type === 'destaques') return prevDestaques();
-    if (s.type === 'faq')       return prevFaq();
+    if (s.type === 'destaques')      return prevDestaques();
+    if (s.type === 'destaquesnoiva')    return prevDestaquesNoiva();
+    if (s.type === 'destaquesgrinalda') return prevDestaquesGrinalda();
+    if (s.type === 'bannersnoiva')      return prevBanners(s);
+    if (s.type === 'bannersgrinalda')   return prevBanners(s);
+    if (s.type === 'faq')               return prevFaq();
     if (s.type === 'presente')  return prevPresente();
     return '';
   }
@@ -897,6 +1081,84 @@ const BLB = (() => {
       </div>`;
   }
 
+  const NOIVA_IMGS = [
+    { src: 'https://assets.ks-static.com.br/acessoriosblanc/noivas/noiva-1.webp', alt: 'Noiva 1' },
+    { src: 'https://assets.ks-static.com.br/acessoriosblanc/noivas/noiva-2.webp', alt: 'Noiva 2' },
+    { src: 'https://assets.ks-static.com.br/acessoriosblanc/noivas/noiva-3.webp', alt: 'Noiva 3' },
+  ];
+
+  function prevDestaquesNoiva() {
+    const slides = NOIVA_IMGS.map(img => `<div class="bc-slide"><img src="${img.src}" alt="${img.alt}" loading="lazy"></div>`).join('');
+    const segs   = NOIVA_IMGS.map(() => `<div class="bc-seg"><div class="bc-fill"></div></div>`).join('');
+    const arrowL = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="square"><polyline points="15 18 9 12 15 6"/></svg>`;
+    const arrowR = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="square"><polyline points="9 18 15 12 9 6"/></svg>`;
+    return `
+      <div class="px">
+        <div class="blanc-grid-two blanc-section-highlights">
+          <div class="blanc-highlight-item">
+            <h2>EMBALAGEM ESPECIAL</h2>
+            <video style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block;" autoplay loop muted playsinline>
+              <source src="https://assets.ks-static.com.br/acessoriosblanc/description02/embalagem-brinco.webm" type="video/webm">
+              <source src="https://assets.ks-static.com.br/acessoriosblanc/description02/embalagem-brinco.mp4" type="video/mp4">
+            </video>
+            <p class="blanc-text">Acreditamos que os momentos mais especiais são feitos de detalhes. Por isso, desenvolvemos uma embalagem exclusiva para nossa Linha de Noivas, pensada para tornar essa experiência única como esse dia merece.</p>
+          </div>
+          <div class="blanc-highlight-item">
+            <div class="blanc-item-sticky">
+              <h2>NOSSAS CLIENTES NOIVAS</h2>
+              <div class="blanc-carousel">
+                ${slides}
+                <button class="bc-btn bc-prev" aria-label="Anterior">${arrowL}</button>
+                <button class="bc-btn bc-next" aria-label="Próximo">${arrowR}</button>
+                <div class="bc-bar">${segs}</div>
+              </div>
+              <p class="blanc-text2">Já são milhares de noivas que nos escolheram para fazer parte do seu grande dia. E para nós, é uma honra e uma emoção indescritível estar presente em um momento tão único e especial.</p>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function prevDestaquesGrinalda() {
+    return `
+      <div class="px">
+        <div class="blanc-grid-two blanc-section-highlights">
+          <div class="blanc-highlight-item">
+            <div class="blanc-item-sticky">
+              <h2>EMBALAGEM ESPECIAL</h2>
+              <img class="blanc-img-quadrada" src="https://assets.ks-static.com.br/acessoriosblanc/description03/embalagem-grinalda.webp" alt="Embalagem Grinalda">
+              <p class="blanc-text2">Acreditamos que os momentos mais especiais são feitos de detalhes. Por isso, desenvolvemos uma embalagem exclusiva para nossa Linha de Grinaldas, pensada para tornar essa experiência única como esse dia merece.</p>
+            </div>
+          </div>
+          <div class="blanc-highlight-item">
+            <h2>PRODUÇÃO PRÓPRIA E ARTESANAL</h2>
+            <video style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block;" autoplay loop muted playsinline>
+              <source src="https://assets.ks-static.com.br/acessoriosblanc/description03/grinalda-artesanal.webm" type="video/webm">
+              <source src="https://assets.ks-static.com.br/acessoriosblanc/description03/grinalda-artesanal.mp4" type="video/mp4">
+            </video>
+            <p class="blanc-text">A maior parte das nossas grinaldas é autoral e produzida internamente, em um processo artesanal e minucioso. Cada detalhe é pensado com carinho e cuidado para que você receba uma peça delicada, única e sofisticada.</p>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function prevBanners(s) {
+    const cols = s.data.banners.length === 2 ? 'cols-2' : 'cols-3';
+    const cards = s.data.banners.map(b => {
+      const img = b.img
+        ? `<img src="${xe(b.img)}" alt="${xe(b.label)}" loading="lazy">`
+        : `<div class="blanc-banner-card-ph">imagem</div>`;
+      return `<a class="blanc-banner-card" href="${xe(b.href)}" target="_blank">${img}</a>`;
+    }).join('');
+    return `
+      <div class="px">
+        <div class="blanc-section-banners">
+          <p class="blanc-banners-title">${xe(s.data.title)}</p>
+          <div class="blanc-banners-grid ${cols}">${cards}</div>
+        </div>
+      </div>`;
+  }
+
   function prevFaq() {
     const faqData = [
       { q: 'Tenho alergia, as peças são antialérgicas?', a: 'Sim, todas as nossas peças são livres de níquel (o principal causador de alergias). Se após receber e usar, perceber qualquer reação na sua pele, você tem 7 dias para entrar em contato com a gente.' },
@@ -954,8 +1216,12 @@ const BLB = (() => {
   const JS_PLACEHOLDERS = {
     slide:     'js-render-slide-text',
     garantia:  'js-render-guarantee',
-    destaques: 'js-render-high-light',
-    faq:       'js-render-faq',
+    destaques:      'js-render-high-light',
+    destaquesnoiva:    'js-render-high-light-noiva',
+    destaquesgrinalda: 'js-render-high-light-grinalda',
+    bannersnoiva:      'js-render-banners-noiva',
+    bannersgrinalda:   'js-render-banners-grinalda',
+    faq:               'js-render-faq',
     presente:  'js-render-gift-cta',
   };
 
@@ -1299,7 +1565,22 @@ const BLB = (() => {
 "        padding-top: 24px;\n" +
 "    }\n" +
 "    }\n\n" +
-"     /* Quinto Bloco */\n" +
+"     /* Carousel (Destaques Noiva) */\n" +
+"    .bc-seg {\n" +
+"        flex: 1;\n" +
+"        height: 3px;\n" +
+"        background: rgba(255,255,255,.35);\n" +
+"        position: relative;\n" +
+"        overflow: hidden;\n" +
+"    }\n\n" +
+"    .bc-fill {\n" +
+"        position: absolute;\n" +
+"        top: 0; left: 0;\n" +
+"        height: 100%;\n" +
+"        width: 0;\n" +
+"        background: #fff;\n" +
+"    }\n\n" +
+"    /* Quinto Bloco */\n" +
 "    blanc-section-highlights {\n" +
 "        padding-bottom: 120px;\n" +
 "    }\n\n" +
@@ -1447,6 +1728,30 @@ const BLB = (() => {
 "    @keyframes blancFade {\n" +
 "      from { opacity: 0; transform: translateY(-5px); }\n" +
 "      to { opacity: 1; transform: translateY(0); }\n" +
+"    }\n\n" +
+"    /* Banners */\n" +
+"    .blanc-section-faq-title {\n" +
+"        font-size: 16px;\n" +
+"        font-weight: 600;\n" +
+"        letter-spacing: 1px;\n" +
+"        margin-bottom: 16px;\n" +
+"        color: #111111;\n" +
+"    }\n\n" +
+"    .blanc-banner-grid-2 {\n" +
+"        display: grid;\n" +
+"        grid-template-columns: 1fr 1fr;\n" +
+"        gap: 8px;\n" +
+"    }\n\n" +
+"    .blanc-banner-grid-3 {\n" +
+"        display: grid;\n" +
+"        grid-template-columns: 1fr 1fr 1fr;\n" +
+"        gap: 8px;\n" +
+"    }\n\n" +
+"    @media (max-width: 767px) {\n" +
+"    .blanc-banner-grid-2,\n" +
+"    .blanc-banner-grid-3 {\n" +
+"        grid-template-columns: 1fr;\n" +
+"    }\n" +
 "    }";
   }
 
@@ -1454,114 +1759,245 @@ const BLB = (() => {
   // EXPORT — genJS (renderCustomWidgets)
   // ───────────────────────────────────────────
   function genJS() {
-    return '<script>\n' +
-'    function renderCustomWidgets() {\n' +
-'        // 1. Especificações (Marquee)\n' +
-'        $(\'#js-render-slide-text\').html(\n' +
-'            \'<div class="blanc-section-slide">\' +\n' +
-'                \'<div class="blanc-marquee-gradient left"> </div>\' +\n' +
-'                \'<div class="blanc-marquee-gradient right"> </div>\' +\n' +
-'                \'<div class="marquee-content">\' +\n' +
-'                    \'<span class="blanc-text-slide blanc-font">+50 MIL CLIENTES SATISFEITAS</span>\' +\n' +
-'                    \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_diamond_dark_01.svg" alt="" width="20px" height="20px">\' +\n' +
-'                    \'<span class="blanc-text-slide blanc-font">DESDE 2019 NO MERCADO</span>\' +\n' +
-'                    \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_diamond_dark_01.svg" alt="" width="20px" height="20px">\' +\n' +
-'                    \'<span class="blanc-text-slide blanc-font">ATENDIMENTO HUMANIZADO</span>\' +\n' +
-'                    \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_diamond_dark_01.svg" alt="" width="20px" height="20px">\' +\n' +
-'                    \'<span class="blanc-text-slide blanc-font">+50 MIL CLIENTES SATISFEITAS</span>\' +\n' +
-'                    \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_diamond_dark_01.svg" alt="" width="20px" height="20px">\' +\n' +
-'                    \'<span class="blanc-text-slide blanc-font">DESDE 2019 NO MERCADO</span>\' +\n' +
-'                    \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_diamond_dark_01.svg" alt="" width="20px" height="20px">\' +\n' +
-'                    \'<span class="blanc-text-slide blanc-font">ATENDIMENTO HUMANIZADO</span>\' +\n' +
-'                    \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_diamond_dark_01.svg" alt="" width="20px" height="20px">\' +\n' +
-'                    \'<span class="blanc-text-slide blanc-font">+50 MIL CLIENTES SATISFEITAS</span>\' +\n' +
-'                \'</div>\' +\n' +
-'            \'</div>\'\n' +
-'        );\n\n' +
-'        // 2. Garantia\n' +
-'        $(\'#js-render-guarantee\').html(\n' +
-'            \'<div class="blanc-section-guarantee">\' +\n' +
-'                \'<div class="blanc-guarantee-block-left">\' +\n' +
-'                    \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_star_dark_01.svg" alt="Garantia" width="16" height="16">\' +\n' +
-'                    \'<p>GARANTIA BLANC</p>\' +\n' +
-'                \'</div>\' +\n' +
-'                \'<div class="blanc-guarantee-block-right">\' +\n' +
-'                    \'<p><strong>6 meses de garantia</strong> em todas as pe&ccedil;as. Esse &eacute; nosso compromisso com voc&ecirc;.</p>\' +\n' +
-'                    \'<div class="blanc-div-link"><a class="blanc-link" href="https://www.acessoriosblanc.com.br/m/garantia/">SAIBA MAIS</a></div>\' +\n' +
-'                \'</div>\' +\n' +
-'            \'</div>\'\n' +
-'        );\n\n' +
-'        // 3. Highlights (Embalagem e Qualidade)\n' +
-'        $(\'#js-render-high-light\').html(\n' +
-'            \'<div class="blanc-grid-two blanc-section-highlights">\' +\n' +
-'                \'<div class="blanc-highlight-item">\' +\n' +
-'                    \'<h2 class="blanc-font">EMBALAGEM PREMIUM</h2>\' +\n' +
-'                    \'<div class="video-wrapper" style="width:100%;margin:0 auto;">\' +\n' +
-'                        \'<video id="video-blanc" style="aspect-ratio:1/1;width:100%;object-fit:cover;display:block;pointer-events:none;" preload="auto" autoplay loop muted playsinline>\' +\n' +
-'                            \'<source src="https://assets.ks-static.com.br/acessoriosblanc/description01/video-blanc-embalagem_wpgx9h.webm" type="video/webm">\' +\n' +
-'                            \'<source src="https://assets.ks-static.com.br/acessoriosblanc/description01/video-blanc-embalagem_wpgx9h.mp4" type="video/mp4">\' +\n' +
-'                        \'</video>\' +\n' +
-'                    \'</div>\' +\n' +
-'                    \'<p class="blanc-text blanc-font"><strong>Para n&oacute;s, cada detalhe importa.</strong> Pensamos cuidadosamente em cada elemento da nossa embalagem para que o momento de receber sua caixinha seja especial e que sua experi&ecirc;ncia seja &uacute;nica desde o primeiro instante.</p>\' +\n' +
-'                \'</div>\' +\n' +
-'                \'<div class="blanc-highlight-item">\' +\n' +
-'                    \'<div class="blanc-item-sticky">\' +\n' +
-'                        \'<h2 class="blanc-font">QUALIDADE GARANTIDA</h2>\' +\n' +
-'                        \'<img class="blanc-img-quadrada" src="https://assets.ks-static.com.br/acessoriosblanc/description01/semijoias-produzidas-no-brasil_xzzazn.webp" alt="Qualidade Garantida">\' +\n' +
-'                        \'<p class="blanc-text2 blanc-font"><strong>Qualidade &eacute; o nosso principal compromisso com voc&ecirc;.</strong> Todas as nossas pe&ccedil;as s&atilde;o produzidas no Brasil por parceiros altamente qualificados e passam por um rigoroso controle de qualidade. Por confiarmos nesse processo, todas as pe&ccedil;as possu&iacute;em garantia.</p>\' +\n' +
-'                    \'</div>\' +\n' +
-'                \'</div>\' +\n' +
-'            \'</div>\'\n' +
-'        );\n\n' +
-'        // 4. Guia de Presentes\n' +
-'        $(\'#js-render-gift-cta\').html(\n' +
-'            \'<div class="blanc-grid-two blanc-section-gift">\' +\n' +
-'                \'<div><img class="blanc-img-quadrada" src="https://assets.ks-static.com.br/acessoriosblanc/description01/semijoia-para-presente.webp" alt="Guia de Presentes"></div>\' +\n' +
-'                \'<div class="blanc-div-gift-text">\' +\n' +
-'                    \'<div class="blanc-wrapper-gift-text">\' +\n' +
-'                        \'<h2 class="blanc-font-great">Guia de Presentes</h2>\' +\n' +
-'                        \'<div class="blanc-div-gift-subtext">\' +\n' +
-'                            \'<h3>PRESENTEAR FICOU F&Aacute;CIL</h3>\' +\n' +
-'                            \'<p>Sugest&otilde;es de presentes perfeitos para transformar momentos em mem&oacute;rias inesquec&iacute;veis.</p>\' +\n' +
-'                        \'</div>\' +\n' +
-'                        \'<div class="blanc-div-link"><a class="blanc-link" href="https://www.acessoriosblanc.com.br/para-presentear/">ACESSAR SUGEST&Otilde;ES</a></div>\' +\n' +
-'                    \'</div>\' +\n' +
-'                \'</div>\' +\n' +
-'            \'</div>\'\n' +
-'        );\n\n' +
-'        // 5. FAQ\n' +
-'        $(\'#js-render-faq\').html(\n' +
-'            \'<div class="blanc-section-faq">\' +\n' +
-'                \'<h2>PERGUNTAS FREQUENTES</h2>\' +\n' +
-'                \'<div class="blanc-grid-three">\' +\n' +
-'                   \'<details class="blanc-faq-item">\' +\n' +
-'                        \'<summary class="blanc-faq-header">Tenho alergia, as pe&ccedil;as s&atilde;o antial&eacute;rgicas?<svg class="blanc-faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.16675 9.16666V4.16666H10.8334V9.16666H15.8334V10.8333H10.8334V15.8333H9.16675V10.8333H4.16675V9.16666H9.16675Z" fill="#595959"/></svg></summary>\' +\n' +
-'                        \'<div class="blanc-faq-body"><p>Sim, todas as nossas pe&ccedil;as s&atilde;o livres de n&iacute;quel (o principal causador de alergias). Recebemos muitos relatos de clientes que s&atilde;o suuuper al&eacute;rgicas e elogiam muito as nossas pe&ccedil;as. E claro, se ap&oacute;s receber e usar, perceber qualquer rea&ccedil;&atilde;o na sua pele, voc&ecirc; tem 7 dias para entrar em contato.</p></div>\' +\n' +
-'                   \'</details>\' +\n' +
-'                   \'<details class="blanc-faq-item">\' +\n' +
-'                        \'<summary class="blanc-faq-header">As pe&ccedil;as escurecem com o tempo?<svg class="blanc-faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.16675 9.16666V4.16666H10.8334V9.16666H15.8334V10.8333H10.8334V15.8333H9.16675V10.8333H4.16675V9.16666H9.16675Z" fill="#595959"/></svg></summary>\' +\n' +
-'                        \'<div class="blanc-faq-body"><p>Al&eacute;m das diversas camadas de Ouro 18k ou R&oacute;dio, nossas pe&ccedil;as s&atilde;o finalizadas com verniz que protege ainda mais a pe&ccedil;a contra oxida&ccedil;&atilde;o. Por confiarmos tanto na nossa qualidade, oferecemos garantia em todas as pe&ccedil;as.</p></div>\' +\n' +
-'                   \'</details>\' +\n' +
-'                   \'<details class="blanc-faq-item">\' +\n' +
-'                        \'<summary class="blanc-faq-header">Se eu n&atilde;o gostar posso trocar/devolver?<svg class="blanc-faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.16675 9.16666V4.16666H10.8334V9.16666H15.8334V10.8333H10.8334V15.8333H9.16675V10.8333H4.16675V9.16666H9.16675Z" fill="#595959"/></svg></summary>\' +\n' +
-'                        \'<div class="blanc-faq-body"><p>Claro, voc&ecirc; t&ecirc;m 7 dias ap&oacute;s o recebimento do seu pedido para manifestar o interesse de trocar/devolver o seu produto SEM CUSTO ALGUM.</p></div>\' +\n' +
-'                   \'</details>\' +\n' +
-'                \'</div>\' +\n' +
-'            \'</div>\'\n' +
-'        );\n\n' +
-'        // 6. Item Icon 1 (Material)\n' +
-'        $(\'#js-render-item-icon-1\').html(\n' +
-'            \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_object_dark_01.svg" alt="" width="32px" height="32px">\'\n' +
-'        );\n\n' +
-'        // 7. Item Icon 2 (Dimensoes)\n' +
-'        $(\'#js-render-item-icon-2\').html(\n' +
-'            \'<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_dimensions_dark_02.svg" alt="" width="32px" height="32px">\'\n' +
-'        );\n' +
-'    }\n\n' +
-'    $(document).ready(function() {\n' +
-'        renderCustomWidgets();\n' +
-'    });\n' +
-'<\/script>';
+    const DIAM = 'https://assets.ks-static.com.br/acessoriosblanc/description01/icon_diamond_dark_01.svg';
+    const SVG_FAQ = `<svg class="blanc-faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.16675 9.16666V4.16666H10.8334V9.16666H15.8334V10.8333H10.8334V15.8333H9.16675V10.8333H4.16675V9.16666H9.16675Z" fill="#595959"/></svg>`;
+
+    // banners dinâmicos (lê estado atual)
+    const sBanNv  = secs.find(x => x.type === 'bannersnoiva');
+    const sBanGr  = secs.find(x => x.type === 'bannersgrinalda');
+
+    const renderBannerBlock = (s, cols) => {
+      if (!s) return '';
+      const cards = s.data.banners.map(b => `
+                <a href="${xe(b.href)}" style="display:block;overflow:hidden;text-decoration:none;border:1px solid #ddd;">
+                    <img src="${xe(b.img)}" alt="${xe(b.label)}" loading="lazy" style="width:100%;height:auto;display:block;">
+                </a>`).join('');
+      const pid       = cols === 2 ? 'js-render-banners-noiva' : 'js-render-banners-grinalda';
+      const gridClass = cols === 2 ? 'blanc-banner-grid-2' : 'blanc-banner-grid-3';
+      return `
+        if ($('#${pid}').length) {
+            $('#${pid}').html(\`
+                <div style="padding:40px 0 56px;">
+                    <h2 class="blanc-section-faq-title">${xe(s.data.title)}</h2>
+                    <div class="${gridClass}">${cards}
+                    </div>
+                </div>
+            \`);
+        }`;
+    };
+
+    return `<script>
+    function renderCustomWidgets() {
+
+        // 1. Marquee
+        $('#js-render-slide-text').html(\`
+            <div class="blanc-section-slide">
+                <div class="blanc-marquee-gradient left"> </div>
+                <div class="blanc-marquee-gradient right"> </div>
+                <div class="marquee-content">
+                    <span class="blanc-text-slide blanc-font">+50 MIL CLIENTES SATISFEITAS</span>
+                    <img src="${DIAM}" alt="" width="20px" height="20px">
+                    <span class="blanc-text-slide blanc-font">DESDE 2019 NO MERCADO</span>
+                    <img src="${DIAM}" alt="" width="20px" height="20px">
+                    <span class="blanc-text-slide blanc-font">ATENDIMENTO HUMANIZADO</span>
+                    <img src="${DIAM}" alt="" width="20px" height="20px">
+                    <span class="blanc-text-slide blanc-font">+50 MIL CLIENTES SATISFEITAS</span>
+                    <img src="${DIAM}" alt="" width="20px" height="20px">
+                    <span class="blanc-text-slide blanc-font">DESDE 2019 NO MERCADO</span>
+                    <img src="${DIAM}" alt="" width="20px" height="20px">
+                    <span class="blanc-text-slide blanc-font">ATENDIMENTO HUMANIZADO</span>
+                    <img src="${DIAM}" alt="" width="20px" height="20px">
+                    <span class="blanc-text-slide blanc-font">+50 MIL CLIENTES SATISFEITAS</span>
+                </div>
+            </div>
+        \`);
+
+        // 2. Garantia
+        $('#js-render-guarantee').html(\`
+            <div class="blanc-section-guarantee">
+                <div class="blanc-guarantee-block-left">
+                    <img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_star_dark_01.svg" alt="Garantia" width="16" height="16">
+                    <p>GARANTIA BLANC</p>
+                </div>
+                <div class="blanc-guarantee-block-right">
+                    <p><strong>6 meses de garantia</strong> em todas as peças. Esse é nosso compromisso com você.</p>
+                    <div class="blanc-div-link"><a class="blanc-link" href="https://www.acessoriosblanc.com.br/m/garantia/">SAIBA MAIS</a></div>
+                </div>
+            </div>
+        \`);
+
+        // 3. Highlights Padrão
+        $('#js-render-high-light').html(\`
+            <div class="blanc-grid-two blanc-section-highlights">
+                <div class="blanc-highlight-item">
+                    <h2 class="blanc-font">EMBALAGEM PREMIUM</h2>
+                    <div class="video-wrapper" style="width:100%;margin:0 auto;">
+                        <video id="video-blanc" style="aspect-ratio:1/1;width:100%;object-fit:cover;display:block;pointer-events:none;" preload="auto" autoplay loop muted playsinline>
+                            <source src="https://assets.ks-static.com.br/acessoriosblanc/description01/video-blanc-embalagem_wpgx9h.webm" type="video/webm">
+                            <source src="https://assets.ks-static.com.br/acessoriosblanc/description01/video-blanc-embalagem_wpgx9h.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <p class="blanc-text blanc-font"><strong>Para nós, cada detalhe importa.</strong> Pensamos cuidadosamente em cada elemento da nossa embalagem para que o momento de receber sua caixinha seja especial e que sua experiência seja única desde o primeiro instante.</p>
+                </div>
+                <div class="blanc-highlight-item">
+                    <div class="blanc-item-sticky">
+                        <h2 class="blanc-font">QUALIDADE GARANTIDA</h2>
+                        <img class="blanc-img-quadrada" src="https://assets.ks-static.com.br/acessoriosblanc/description01/semijoias-produzidas-no-brasil_xzzazn.webp" alt="Qualidade Garantida">
+                        <p class="blanc-text2 blanc-font"><strong>Qualidade é o nosso principal compromisso com você.</strong> Todas as nossas peças são produzidas no Brasil por parceiros altamente qualificados e passam por um rigoroso controle de qualidade. Por confiarmos nesse processo, todas as peças possuem garantia.</p>
+                    </div>
+                </div>
+            </div>
+        \`);
+
+        // 3b. Highlights Grinaldas
+        if ($('#js-render-high-light-grinalda').length) {
+            $('#js-render-high-light-grinalda').html(\`
+                <div class="blanc-grid-two blanc-section-highlights">
+                    <div class="blanc-highlight-item">
+                        <div class="blanc-item-sticky">
+                            <h2 class="blanc-font">EMBALAGEM ESPECIAL</h2>
+                            <img class="blanc-img-quadrada" src="https://assets.ks-static.com.br/acessoriosblanc/description03/embalagem-grinalda.webp" alt="Embalagem Grinalda">
+                            <p class="blanc-text2 blanc-font">Acreditamos que os momentos mais especiais são feitos de detalhes. Por isso, desenvolvemos uma embalagem exclusiva para nossa Linha de Grinaldas, pensada para tornar essa experiência única como esse dia merece.</p>
+                        </div>
+                    </div>
+                    <div class="blanc-highlight-item">
+                        <h2 class="blanc-font">PRODUÇÃO PRÓPRIA E ARTESANAL</h2>
+                        <div class="video-wrapper" style="width:100%;margin:0 auto;">
+                            <video id="video-blanc-grinalda" style="aspect-ratio:1/1;width:100%;object-fit:cover;display:block;pointer-events:none;" preload="auto" autoplay loop muted playsinline>
+                                <source src="https://assets.ks-static.com.br/acessoriosblanc/description03/grinalda-artesanal.webm" type="video/webm">
+                                <source src="https://assets.ks-static.com.br/acessoriosblanc/description03/grinalda-artesanal.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <p class="blanc-text blanc-font">A maior parte das nossas grinaldas é autoral e produzida internamente, em um processo artesanal e minucioso. Cada detalhe é pensado com carinho e cuidado para que você receba uma peça delicada, única e sofisticada.</p>
+                    </div>
+                </div>
+            \`);
+        }
+
+        // 3c. Highlights Noiva
+        if ($('#js-render-high-light-noiva').length) {
+            const noivaMsgs = [
+                { src: 'https://assets.ks-static.com.br/acessoriosblanc/noivas/noiva-1.webp', alt: 'Noiva 1' },
+                { src: 'https://assets.ks-static.com.br/acessoriosblanc/noivas/noiva-2.webp', alt: 'Noiva 2' },
+                { src: 'https://assets.ks-static.com.br/acessoriosblanc/noivas/noiva-3.webp', alt: 'Noiva 3' },
+            ];
+            const arrowL = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="square"><polyline points="15 18 9 12 15 6"/></svg>';
+            const arrowR = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="square"><polyline points="9 18 15 12 9 6"/></svg>';
+            const slidesHtml = noivaMsgs.map(img => \`<div class="bc-slide"><img src="\${img.src}" alt="\${img.alt}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>\`).join('');
+            const segsHtml   = noivaMsgs.map(() => '<div class="bc-seg"><div class="bc-fill"></div></div>').join('');
+
+            $('#js-render-high-light-noiva').html(\`
+                <div class="blanc-grid-two blanc-section-highlights">
+                    <div class="blanc-highlight-item">
+                        <h2 class="blanc-font">EMBALAGEM ESPECIAL</h2>
+                        <div class="video-wrapper" style="width:100%;margin:0 auto;">
+                            <video id="video-blanc-noiva" style="aspect-ratio:1/1;width:100%;object-fit:cover;display:block;pointer-events:none;" preload="auto" autoplay loop muted playsinline>
+                                <source src="https://assets.ks-static.com.br/acessoriosblanc/description02/embalagem-brinco.webm" type="video/webm">
+                                <source src="https://assets.ks-static.com.br/acessoriosblanc/description02/embalagem-brinco.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <p class="blanc-text blanc-font">Acreditamos que os momentos mais especiais são feitos de detalhes. Por isso, desenvolvemos uma embalagem exclusiva para nossa Linha de Noivas, pensada para tornar essa experiência única como esse dia merece.</p>
+                    </div>
+                    <div class="blanc-highlight-item">
+                        <div class="blanc-item-sticky">
+                            <h2 class="blanc-font">NOSSAS CLIENTES NOIVAS</h2>
+                            <div id="bc-noiva" style="position:relative;width:100%;overflow:hidden;aspect-ratio:1/1;">
+                                \${slidesHtml}
+                                <button style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:#fff;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;padding:0;" aria-label="Anterior">\${arrowL}</button>
+                                <button style="position:absolute;right:10px;top:50%;transform:translateY(-50%);width:36px;height:36px;background:#fff;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;padding:0;" aria-label="Próximo">\${arrowR}</button>
+                                <div style="position:absolute;bottom:0;left:0;right:0;padding:0 10px 10px;display:flex;gap:4px;z-index:10;box-sizing:border-box;">\${segsHtml}</div>
+                            </div>
+                            <p class="blanc-text2 blanc-font">Já são milhares de noivas que nos escolheram para fazer parte do seu grande dia. E para nós, é uma honra e uma emoção indescritível estar presente em um momento tão único e especial.</p>
+                        </div>
+                    </div>
+                </div>
+            \`);
+
+            (function() {
+                const el = document.getElementById('bc-noiva');
+                if (!el) return;
+                const slides = Array.from(el.querySelectorAll('.bc-slide'));
+                const fills  = Array.from(el.querySelectorAll('.bc-fill'));
+                const btns   = el.querySelectorAll('button');
+                const INTERVAL = 4000, DUR = 600;
+                let cur = 0, prog = 0, lastTs = null;
+                slides.forEach((s, i) => {
+                    s.style.cssText += \`;position:absolute;inset:0;transition:transform \${DUR}ms ease-in-out,opacity \${DUR * .5}ms;transform:\${i === 0 ? 'translateX(0)' : 'translateX(100%)'};opacity:\${i === 0 ? '1' : '0'};\`;
+                });
+                function go(next, dir) {
+                    const prev = cur; cur = next; prog = 0; lastTs = null;
+                    slides[prev].style.transform = \`translateX(\${dir > 0 ? '-100%' : '100%'})\`;
+                    slides[prev].style.opacity = '0';
+                    slides[next].style.transform = 'translateX(0)';
+                    slides[next].style.opacity = '1';
+                    fills.forEach((f, i) => { if (i !== cur) f.style.width = '0'; });
+                }
+                function tick(ts) {
+                    if (!lastTs) lastTs = ts;
+                    prog += (ts - lastTs) / INTERVAL * 100; lastTs = ts;
+                    if (fills[cur]) fills[cur].style.width = Math.min(prog, 100) + '%';
+                    if (prog >= 100) go((cur + 1) % slides.length, 1);
+                    requestAnimationFrame(tick);
+                }
+                requestAnimationFrame(tick);
+                btns[0].addEventListener('click', () => go((cur - 1 + slides.length) % slides.length, -1));
+                btns[1].addEventListener('click', () => go((cur + 1) % slides.length, 1));
+            })();
+        }
+
+        // 4. Guia de Presentes
+        $('#js-render-gift-cta').html(\`
+            <div class="blanc-grid-two blanc-section-gift">
+                <div><img class="blanc-img-quadrada" src="https://assets.ks-static.com.br/acessoriosblanc/description01/semijoia-para-presente.webp" alt="Guia de Presentes"></div>
+                <div class="blanc-div-gift-text">
+                    <div class="blanc-wrapper-gift-text">
+                        <h2 class="blanc-font-great">Guia de Presentes</h2>
+                        <div class="blanc-div-gift-subtext">
+                            <h3>PRESENTEAR FICOU FÁCIL</h3>
+                            <p>Sugestões de presentes perfeitos para transformar momentos em memórias inesquecíveis.</p>
+                        </div>
+                        <div class="blanc-div-link"><a class="blanc-link" href="https://www.acessoriosblanc.com.br/para-presentear/">ACESSAR SUGESTÕES</a></div>
+                    </div>
+                </div>
+            </div>
+        \`);
+
+        // 5. FAQ
+        $('#js-render-faq').html(\`
+            <div class="blanc-section-faq">
+                <h2>PERGUNTAS FREQUENTES</h2>
+                <div class="blanc-grid-three">
+                    <details class="blanc-faq-item">
+                        <summary class="blanc-faq-header">Tenho alergia, as peças são antialérgicas? ${SVG_FAQ}</summary>
+                        <div class="blanc-faq-body"><p>Sim, todas as nossas peças são livres de níquel (o principal causador de alergias). Recebemos muitos relatos de clientes que são suuuper alérgicas e elogiam muito as nossas peças. Então pode ficar despreocupada :) . E claro, se após receber e usar, perceber qualquer reação na sua pele, você tem 7 dias para entrar em contato com a gente, solicitar a devolução e devolvemos seu dinheiro sem problema algum.</p></div>
+                    </details>
+                    <details class="blanc-faq-item">
+                        <summary class="blanc-faq-header">As peças escurecem com o tempo? ${SVG_FAQ}</summary>
+                        <div class="blanc-faq-body"><p>Além das diversas camadas de Ouro 18k ou Ródio, nossas peças são finalizadas com verniz que protege ainda mais a peça contra oxidação. Toda a semijoia pode sofrer alteração com o tempo, a depender dos cuidados de cada um. Mas seguindo os cuidados básicos pode ter certeza que sua semijoia vai durar MUITO. Temos um ótimo feedback das nossas clientes com relação a durabilidade. E por confiarmos tanto na nossa qualidade, oferecemos garantia em todas as peças.</p></div>
+                    </details>
+                    <details class="blanc-faq-item">
+                        <summary class="blanc-faq-header">Se eu não gostar posso trocar/devolver? ${SVG_FAQ}</summary>
+                        <div class="blanc-faq-body"><p>Claro, não se preocupe. Você têm 7 dias após o recebimento do seu pedido para manifestar o interesse de trocar/devolver o seu produto SEM CUSTO ALGUM. Para nós o mais importante é que vocês estejam satisfeitas com a compra. Para mais detalhes consulte a seção "TROCAS/DEVOLUÇÕES"</p></div>
+                    </details>
+                </div>
+            </div>
+        \`);
+
+        // 5b. Banners Noiva${renderBannerBlock(sBanNv, 2)}
+
+        // 5c. Banners Grinaldas${renderBannerBlock(sBanGr, 3)}
+
+        // 6. Item Icon 1
+        $('#js-render-item-icon-1').html(\`<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_object_dark_01.svg" alt="" width="32px" height="32px">\`);
+
+        // 7. Item Icon 2
+        $('#js-render-item-icon-2').html(\`<img src="https://assets.ks-static.com.br/acessoriosblanc/description01/icon_dimensions_dark_02.svg" alt="" width="32px" height="32px">\`);
+    }
+
+    $(document).ready(function() {
+        renderCustomWidgets();
+    });
+<\/script>`;
   }
 
   // ───────────────────────────────────────────
@@ -1656,6 +2092,7 @@ const BLB = (() => {
     addItem, remItem,
     addSec, delSec, moveSec, selectSec,
     toggleMenu, closeMenu,
+    setModel,
   };
 })();
 </script>
