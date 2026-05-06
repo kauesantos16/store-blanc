@@ -23,7 +23,7 @@
         max-width: 1280px;
         padding-left: 24px;
         padding-right: 24px;
-        margin: 0 auto; /* Centraliza o container */
+        margin: 0 auto;
     }
 
     .blanc-img-quadrada {
@@ -202,7 +202,7 @@
 
     .blanc-section-slide {
         width: 100%;
-        overflow: hidden; /* Esconde o que sai da tela */
+        overflow: hidden;
         white-space: nowrap;
         display: flex !important;
         position: relative;
@@ -228,7 +228,7 @@
     .marquee-content {
         display: flex !important;
         align-items: center;
-        gap: 40px; /* Espaçamento entre os itens */
+        gap: 40px;
         animation: scroll 20s linear infinite;
     }
 
@@ -256,13 +256,11 @@
     }
     }
 
-    /* O Ícone SVG */
     .icon {
     width: 20px;
     height: 20px;
     }
 
-    /* A Mágica do Loop */
     @keyframes scroll {
     from {
         transform: translateX(0);
@@ -291,10 +289,6 @@
         display: flex !important;
         flex-direction: column;
         gap: 8px;
-    }
-
-    .blanc-list-ul li .black {
-        color: #11111;
     }
 
     /* Quarto Bloco */
@@ -326,12 +320,12 @@
         padding-right: 24px;
         display: flex !important;
         width: fit-content;
-        gap: 8px
+        gap: 8px;
     }
 
     .blanc-guarantee-block-left p {
         width: fit-content;
-        font-size: 14px
+        font-size: 14px;
     }
 
     .blanc-guarantee-block-right {
@@ -355,7 +349,24 @@
     }
     }
 
-     /* Quinto Bloco */
+     /* Carousel (Destaques Noiva) */
+    .bc-seg {
+        flex: 1;
+        height: 3px;
+        background: rgba(255,255,255,.35);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .bc-fill {
+        position: absolute;
+        top: 0; left: 0;
+        height: 100%;
+        width: 0;
+        background: #fff;
+    }
+
+    /* Quinto Bloco */
     blanc-section-highlights {
         padding-bottom: 120px;
     }
@@ -365,7 +376,6 @@
             padding-bottom: 32px;
     }
     }
-
 
     .blanc-section-highlights {
         gap: 8px;
@@ -443,7 +453,7 @@
         gap: 8px;
     }
 
-    /* Setimo Bloco */
+    /* Sétimo Bloco */
 
     .blanc-grid-three {
         display: grid !important;
@@ -483,36 +493,6 @@
         flex-direction: column;
     }
 
-    .blanc-faq-item h3 {
-        font-size: 14px;
-        letter-spacing: 1px;
-        line-height: 150%;
-        font-weight: 600;
-        color: #595959;
-        margin: 0;
-    }
-
-    .blanc-faq-item p {
-        font-size: 14px;
-        line-height: 150%;
-        letter-spacing: 1px;
-        color: #595959;
-        margin: 0;
-    }
-
-    /* Faq Abrir e Fechar */
-    .blanc-faq-wrapper {
-      max-width: 600px;
-      margin: 20px auto;
-      font-family: sans-serif;
-    }
-    
-    /* Item individual (removi a borda daqui) */
-    .blanc-faq-item {
-      margin-bottom: 0;
-    }
-    
-    /* Pergunta com a linha fixa embaixo */
     .blanc-faq-header {
       list-style: none;
       display: flex !important;
@@ -521,8 +501,7 @@
       padding: 24px 0;
       font-weight: 600;
       cursor: pointer;
-      /* A linha agora fica aqui */
-      border-bottom: 1px solid #d5d5d5; 
+      border-bottom: 1px solid #d5d5d5;
       user-select: none;
       font-size: 14px;
       line-height: 150%;
@@ -530,41 +509,35 @@
       color: #595959;
       margin: 0;
     }
-    
-    /* Remove a seta padrão do Chrome/Safari */
+
     .blanc-faq-header::-webkit-details-marker {
       display: none;
     }
-    
-    /* Estilo do ícone + */
+
     .blanc-faq-icon {
       transition: transform 0.3s ease;
       display: inline-block;
       line-height: 1;
       margin-left: 10px;
     }
-    
-    /* Gira o ícone quando aberto */
+
     .blanc-faq-item[open] .blanc-faq-icon {
       transform: rotate(45deg);
     }
-    
-    /* Conteúdo da resposta */
+
     .blanc-faq-body {
-      padding: 24px 0 24px 0; /* Espaçamento interno da resposta */
+      padding: 24px 0 24px 0;
       color: #595959;
       font-size: 14px;
       letter-spacing: 1px;
       line-height: 150%;
       animation: blancFade 0.3s ease-out;
     }
-    
-    /* Opcional: Uma linha extra bem suave no final da resposta 
-       apenas para separar visualmente do próximo item quando aberto */
+
     .blanc-faq-item[open] {
       border-bottom: 1px solid #f9f9f9;
     }
-    
+
     @keyframes blancFade {
       from { opacity: 0; transform: translateY(-5px); }
       to { opacity: 1; transform: translateY(0); }
