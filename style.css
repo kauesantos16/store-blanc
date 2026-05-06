@@ -568,5 +568,6 @@
     .blanc-banner-grid-2,
     .blanc-banner-grid-3 {
         grid-template-columns: 1fr;
+        row-gap: 8px;
     }
     }
