@@ -553,14 +553,14 @@
     }
 
     .blanc-banner-grid-2 {
-        display: grid;
-        grid-template-columns: 1fr 1fr !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
         gap: 8px;
     }
 
     .blanc-banner-grid-3 {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 1fr;
         gap: 8px;
     }
 
