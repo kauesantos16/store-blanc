@@ -202,6 +202,15 @@ html, body { height: 100%; margin: 0; padding: 0; }
 #blb input[type=text].inp:focus, #blb textarea.inp:focus { border-color: var(--blk); }
 #blb textarea.inp { line-height: 1.55; }
 #blb .hint { font-size: .64rem; color: var(--g5); margin-top: 3px; font-style: italic; }
+#blb .rte-wrap { border: 1px solid var(--g3); border-radius: 2px; background: var(--g1); transition: border-color .15s; }
+#blb .rte-wrap:focus-within { border-color: var(--blk); }
+#blb .rte-toolbar { display: flex; align-items: center; gap: 2px; padding: 4px 6px; border-bottom: 1px solid var(--g3); background: var(--g2); }
+#blb .rte-btn { display: flex; align-items: center; justify-content: center; width: 26px; height: 24px; background: none; border: 1px solid transparent; border-radius: 2px; font-family: 'Inter', sans-serif; font-size: .78rem; color: var(--g6); cursor: pointer; transition: all .1s; }
+#blb .rte-btn:hover { background: var(--g3); border-color: var(--g3); color: var(--blk); }
+#blb .rte-btn.active { background: var(--blk); border-color: var(--blk); color: #fff; }
+#blb .rte-sep { width: 1px; height: 16px; background: var(--g3); margin: 0 3px; }
+#blb .rte-body { padding: 8px 9px; font-family: 'Inter', sans-serif; font-size: .8rem; color: var(--blk); line-height: 1.6; min-height: 110px; outline: none; cursor: text; }
+#blb .rte-body:empty::before { content: attr(data-placeholder); color: var(--g4); pointer-events: none; }
 
 /* REPEATABLE */
 #blb .rl { display: flex; flex-direction: column; gap: 5px; margin-bottom: 7px; }
@@ -329,7 +338,9 @@ html, body { height: 100%; margin: 0; padding: 0; }
 
 /* Resumo */
 #blb .pframe .blanc-section-description { padding-top: 64px; padding-bottom: 64px; }
-#blb .pframe .blanc-text-description { max-width: 720px; font-size: 1rem; font-weight: 300; line-height: 1.65; letter-spacing: .02em; color: #111; }
+#blb .pframe .blanc-text-description { max-width: 720px; font-size: 1rem; font-weight: 400; line-height: 1.65; letter-spacing: .02em; color: #111; }
+#blb .pframe .blanc-text-description strong { font-weight: 700; }
+#blb .pframe .blanc-text-description em { font-style: italic; }
 
 /* Slide marquee */
 #blb .pframe .blanc-section-slide {
@@ -789,13 +800,56 @@ const BLB = (() => {
     panel.querySelector('.ep-bd').innerHTML = `
       <div class="fr">
         <label class="lb">Parágrafo</label>
-        <textarea class="inp" id="blb-resumo-${s.id}" rows="7">${xe(s.data.text)}</textarea>
-        <p class="hint">Texto simples. Sem HTML.</p>
+        <div class="rte-wrap">
+          <div class="rte-toolbar">
+            <button class="rte-btn" data-cmd="bold"   title="Negrito (Ctrl+B)"><strong>B</strong></button>
+            <button class="rte-btn" data-cmd="italic" title="Itálico (Ctrl+I)"><em>I</em></button>
+            <div class="rte-sep"></div>
+            <button class="rte-btn" data-cmd="removeFormat" title="Remover formatação">✕</button>
+          </div>
+          <div class="rte-body" id="blb-resumo-${s.id}" contenteditable="true" data-placeholder="Digite o texto do resumo…"></div>
+        </div>
+        <p class="hint">Enter = quebra de linha • Ctrl+B negrito • Ctrl+I itálico</p>
       </div>`;
     frag.appendChild(panel);
     requestAnimationFrame(() => {
-      const ta = document.getElementById('blb-resumo-' + s.id);
-      if (ta) ta.addEventListener('input', function() { s.data.text = this.value; renderPreview(); });
+      const body = document.getElementById('blb-resumo-' + s.id);
+      if (!body) return;
+      body.innerHTML = s.data.text || '';
+      const toolbar = panel.querySelector('.rte-toolbar');
+      const btns    = toolbar.querySelectorAll('.rte-btn[data-cmd]');
+
+      function syncData() {
+        // Normaliza: troca <div> de quebra de linha do Chrome por <br>
+        s.data.text = body.innerHTML
+          .replace(/<div><br\s*\/?><\/div>/gi, '<br>')
+          .replace(/<div>(.*?)<\/div>/gi, '<br>$1')
+          .replace(/^<br>/, '');
+        renderPreview();
+      }
+
+      function updateToolbar() {
+        btns.forEach(btn => {
+          const cmd = btn.dataset.cmd;
+          if (cmd === 'removeFormat') return;
+          btn.classList.toggle('active', document.queryCommandState(cmd));
+        });
+      }
+
+      body.addEventListener('input',  () => { syncData(); updateToolbar(); });
+      body.addEventListener('keyup',  updateToolbar);
+      body.addEventListener('mouseup', updateToolbar);
+      body.addEventListener('focus',   updateToolbar);
+
+      btns.forEach(btn => {
+        btn.addEventListener('mousedown', e => {
+          e.preventDefault(); // mantém foco no editor
+          document.execCommand(btn.dataset.cmd, false, null);
+          syncData();
+          updateToolbar();
+          body.focus();
+        });
+      });
     });
     return frag;
   }
@@ -1019,7 +1073,7 @@ const BLB = (() => {
     return `
       <div class="px">
         <div class="blanc-section-description">
-          <p class="blanc-text-description">${xe(s.data.text)}</p>
+          <p class="blanc-text-description">${s.data.text}</p>
         </div>
       </div>`;
   }
@@ -1230,7 +1284,7 @@ const BLB = (() => {
       if (s.type === 'resumo') {
         return '<!-- RESUMO -->\n' +
                '<div class="blanc-section-description">\n' +
-               '  <p class="blanc-text-description">' + xe(s.data.text) + '</p>\n' +
+               '  <p class="blanc-text-description">' + s.data.text + '</p>\n' +
                '</div>';
       }
       if (s.type === 'detalhes') {
@@ -1421,11 +1475,13 @@ const BLB = (() => {
 "    .blanc-text-description {\n" +
 "        max-width: 760px;\n" +
 "        font-size: 24px;\n" +
-"        font-weight: 300;\n" +
+"        font-weight: 400;\n" +
 "        line-height: 150%;\n" +
 "        letter-spacing: 1px;\n" +
 "        width: 100%;\n" +
 "    }\n\n" +
+"    .blanc-text-description strong { font-weight: 700; }\n" +
+"    .blanc-text-description em { font-style: italic; }\n\n" +
 "    @media (max-width: 767px) {\n" +
 "    .blanc-text-description {\n" +
 "        font-size: 14px;\n" +
